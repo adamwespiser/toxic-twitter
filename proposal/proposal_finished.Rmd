@@ -79,7 +79,7 @@ All team members have contributed similar amount of effort
   
   
 
-```{r pressure, echo=FALSE, fig.cap="An example toxic tweet with highlights", out.width = '70%'}
+```{r pressure, echo=FALSE, fig.cap="An example toxic tweet with highlights",fig.align="center", out.width = '70%'}
 library(knitr)
 knitr::include_graphics("imgs/figure1.png")
 ```
@@ -89,7 +89,7 @@ knitr::include_graphics("imgs/figure1.png")
 . 
   
 
-```{r, echo=FALSE, fig.cap="An example toxic tweet with highlights", out.width = '70%'}
+```{r, echo=FALSE, fig.cap="An example toxic tweet with highlights",fig.align="center", out.width = '70%'}
 
 knitr::include_graphics("imgs/figure2.png")
 
@@ -99,9 +99,8 @@ knitr::include_graphics("imgs/figure2.png")
 
 \pagebreak
 
-  
 
-```{r, echo=FALSE, fig.cap="A visualization of toxicity in a users tweets through time", out.width = "70%"}
+```{r, echo=FALSE, fig.cap="A visualization of toxicity in a users tweets through time",fig.align="center", out.width = "70%"}
 knitr::include_graphics("imgs/figure3.png")
 ```
 
@@ -109,7 +108,7 @@ knitr::include_graphics("imgs/figure3.png")
 
 
 
-\pagebreak 
+\newpage
 
 ##Citations
 
