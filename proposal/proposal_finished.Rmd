@@ -10,7 +10,7 @@ library(ggplot2)  # For plotting
 library(png)      # For grabbing the dimensions of png files
 ```
 
-
+#### Adam Wespiser, Ajay Bhargav Baaskaran, Mukund Muralikrishnan, Nachiappan Chockalingam
 
 ##What are we trying to do?
 A “toxic comment” is any online comment perceived as hurtful, anti-social or disruptive, arising from unresolved conflicting beliefs between people. Our goal is to build a tool that will analyze, understand, and visualize the toxicity in social media comments.
@@ -21,7 +21,7 @@ One application, Sentiment Viz, (Healey and Ramaswamy 2017) ingest tweets, analy
 Toxic comment classification has numerous solutions; however, these algorithms are vulnerable to simple word manipulation to get past toxicity filters. (Rodriguez 2018) Perspective API, a toxic comment classifier as a service, also has difficulty detecting distorted toxic comments, which can be overcome with pre-processing (Hossieni et al. 2018) If such distortion is present in social media text, we plan on implementing the same text pre-processing pipeline as described.    
 The state-of-the-art toxicity classifier is an ensemble of 12 different classifiers: both difficult to implement and computationally expensive for our project. (van Aken et al. 2018) . Non-sequential methods, like TF-IDF, proved accurate in the related, but not identical, problem of classifying online hate speech. (Gaydhani et al. 2018) However, logistic regression classifiers tend to misclassify based on word presence, not context, when assigned a similar task. (Davidson et al. 2017) These models, are straightforward to implement, and can be learned using the Kaggle Toxic Comment Classification Challenge Dataset. For our project, they will be a good starting point.    
 For better performance, recurrent neural networks, outperform word n-gram models in comment classification tasks (Pavlopoulos et al. 2018). We will build a similar model with Pytorch, (Paszke et al. 2017) a deep learning library with automatic differentiation tools for optimization and easy GPU operations.     
-One promising neural architecture is a LSTM-Attention based model, treating inputs as, “word vectors”, with discernable inter-relationships, and utilizing an attention mechanism to focus on the parts of text most contributing to classification. (Wang et al. 2016) This is especially applicable to our project, where some words are inherently more toxic.    
+One promising neural architecture is a LSTM-Attention based model, treating inputs as “word vectors” with discernable inter-relationships, and utilizing an attention mechanism to focus on the parts of text most contributing to classification. (Wang et al. 2016) This is especially applicable to our project, where some words are inherently more toxic.    
 To provide users feedback on what parts of their comments are causing them to become toxic, recurrent neural networks can be augmented with a “Z-layer”, or interpretable selection of words causing the comment to become toxic. (Svec et al. 2018) Unfortunately, this model is complex and especially difficult to train. A simpler method is called Erasure, which finds the minimal set of words needed to flip a prediction from toxic to non-toxic and would be susceptible to heuristic calculation. (Li et al. 2017). Using dynamic programming, we may be able to improve on this approach. Finally, we can try to use LIME, which gives interpretable explanations for classifiers on which words are causing the prediction of a class label using a model-agnostic algorithm. (Ribeiro 2016). LIME would be extremely useful, since it will be able to highlight problematic words and allow us the freedom to explore a breadth of underlying models. (Figure 1 and 2)    
 
 ##What's new in your approach and why do you think it will be successful?
@@ -45,19 +45,19 @@ The total will be $214.
 
 ##Plan of activities and how long it will take
 
+
+###Data Ingestion:
+Time estimate: 3 - 4 weeks
+
+* Use Twitter API or web scraping to collect data
+* Use Google Compute Services to store data
+
 ###Backend + ML+ Infrastructure:
 Time estimate: 2 - 3 weeks
 
 * Use [Perspective API](https://www.perspectiveapi.com/#/) to classify a comment as is toxic. 
 * Finding an algorithm with good performance for toxic comment classification, like Recurrent Neural Networks, and replace Perspective API.
-* Use Google Compute Services to host the web server + front-end
-
-###Data Ingestion:
-Time estimate: 3 - 4 weeks
-
-* One person can start data ingestion.
-    + Use Twitter API or web scraping to collect data
-    + Use Google Compute Services to store data
+* Use Google Compute Services to host the web server and front-end
 
 ###Design + Front-end:
 Time estimate: 4 - 5 weeks
