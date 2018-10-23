@@ -1,0 +1,177 @@
+username,time,tweet
+wespiser,2015-04-01 05:28:39,Want to understand git? Try this tutorial(w/ examples) https://codewords.recurse.com/issues/two/git-from-the-inside-out ... via @recursecenter
+wespiser,2015-03-25 03:51:54,again p-values are overrated and dangerous...http://www.nature.com/nmeth/journal/v12/n3/full/nmeth.3288.html ...
+wespiser,2015-03-24 02:46:19,http://gizmodo.com/this-webpage-uses-centuries-old-physics-to-let-anyone-s-1693242974?utm_campaign=socialflow_gizmodo_facebook&utm_source=gizmodo_facebook&utm_medium=socialflow ...
+wespiser,2014-05-21 15:46:26,@caseybergman on behalf of Weng lab thank you!
+wespiser,2014-03-16 00:27:32,I scored 20576 points at 2048 a game where you join numbers to score high! #2048game http://git.io/2048  via @gabrielecirulli
+wespiser,2014-01-26 19:19:50,My computer is sad that it's neither pathetic nor a fallacy: http://ow.ly/sXMyU 
+wespiser,2014-01-20 02:34:18,A nice article on the overwhelming shortcomings of p-value statistics: The Cult of Statistical Significance. http://ow.ly/sJUuY 
+wespiser,2014-01-11 01:34:00,@SarcasticRover Hang in there bud the ride home is coming soon!
+wespiser,2014-01-10 03:45:14,@TrestleJeff R's bigMemory and big.lm if memory is a problem? Also Hastie's Elements of Stat. Learning has a chapter on p >> N learning.
+wespiser,2014-01-06 14:11:10,data-Ink reduction at its best: http://d24w6bsrhbeh9d.cloudfront.net/photo/aNeDGq4_460sa_v1.gif ...
+wespiser,2014-01-02 02:34:03,@treycausey good point what is your N size?
+wespiser,2014-01-02 02:28:45,@treycausey Can you release your Chi-Squared stat for this?
+wespiser,2013-12-30 17:54:50,Using linear algebra and algebraic number theory to make pretty patterns. - Mathematics Imperial College... http://tmblr.co/Z7JSKp12it6UL 
+wespiser,2016-11-28 16:05:49,Write You A Scheme Version 2: New and improved for the rigors of modern industry! https://wespiser.com/writings/wyas/home.html .... #haskell #scheme
+wespiser,2016-11-16 04:45:44,RDF for Haskell great work!!! http://robstewart57.github.io/rdf4h/ 
+wespiser,2016-11-02 20:37:40,Spent the last two months think no one cared about parsers...glad to see thats not that case! https://arxiv.org/abs/1611.00020 
+wespiser,2016-08-31 21:03:48,"Pro tip: when interviewing someone for a ""data science"" position use the term ""frequency"" correctly. #wordsmatter #math"
+wespiser,2016-08-12 01:35:00,@astVintageSpace Source code for Apollo mission:  https://github.com/chrislgarry/Apollo-11 ... #nasa #Apollo11 #spaceflight
+wespiser,2016-08-10 02:04:43,Congrats to the Snap team on 1.0 release! http://snapframework.com/blog/2016/08/07/snap-1.0-released ... #haskell
+wespiser,2016-08-08 18:06:05,thank you!
+wespiser,2016-06-07 14:58:04,also I've had decent luck emailing prof. with difficult problems MIT and Tufts have folks who live to solve hard problems.
+wespiser,2016-06-07 14:42:49,you're a pretty good source: folks who love tech and are experts in fields outside of mine.
+wespiser,2016-04-28 10:44:52,Dutch starvation during WW2https://twitter.com/Point_Mutation/status/725517442416447488 ...
+wespiser,2016-04-28 10:42:30,we need to be doing better which Bayes was the solution to thinking hard about things...https://twitter.com/hildabast/status/724621775670251520 ...
+wespiser,2016-04-28 10:37:57,#haskell what would be the best approach to build a plotting b on the same order of magnitude as R's ggolot2?
+wespiser,2016-04-28 10:36:16,@eric_mccorkle yea I would have to agree except for one thing: the order of magnitude is probably 10^ to 104^4 greater
+wespiser,2016-04-16 17:53:43,@eric_mccorkle is this relevant to a haskell's monadic interpreters we could write in a few months? http://flint.cs.yale.edu/trifonov/cs629/modular-monadic-semantics.pdf ...
+wespiser,2016-03-31 17:30:07,It's taken months of learning #haskell to understand type-level programming besides Servant are there any other production level examples?
+wespiser,2016-02-15 20:42:15,@eric_mccorkle I would love the help pm me if you need anything!
+wespiser,2016-01-23 18:38:46,@ValMarOl68 @Arthur_Officiel @TF1 sorry won't be able to make it
+wespiser,2016-01-22 07:02:20,really cool #haskell library showing off interpretation strategies: https://github.com/luqui/vatican 
+wespiser,2016-01-19 19:38:40,data modelling in #Excell or spreadsheets is like eating yogurt with chopsticks...
+wespiser,2016-01-19 15:10:17,@eric_mccorkle DOD money going to Homotopy Type Theory research...http://homotopytypetheory.org/2014/04/29/hott-awarded-a-muri/ ...
+wespiser,2016-01-19 03:24:58,It's nice to see some #haskell code call back to my origins in biology...http://savinaroja.github.io/2016/01/11/haskell-meets-the-central-dogma/ ...
+wespiser,2016-01-17 20:58:09,Drawing Trees w/ Haskell: http://fhtr.blogspot.com/2008/12/drawing-tree-with-haskell-and-cairo.html ...
+wespiser,2015-11-23 14:17:39,wonderful book!https://twitter.com/smdiehl/status/667494376235364352 ...
+wespiser,2015-09-04 11:52:52,cool article on Bayesian Regression!http://www.r-bloggers.com/bayesian-regression-models-using-stan-in-r/ ...
+wespiser,2017-07-04 21:36:50,Write You A Scheme Version 2 http://wespiser.com/writings/wyas/home.html ... now complete! Image by http://dev.to/rly   not O'Reily. #Haskell #Schemepic.twitter.com/L3g8WjyM0q
+wespiser,2017-06-28 15:00:41,Yesterday I ran into two solutions https://github.com/amarpotghan/crjdt-haskell/ ... and https://github.com/fumieval/extensible .... There is no JSON free lunch but i like crjdt!
+wespiser,2017-06-28 14:43:34,Formal proof techniques for machine learning systems: https://arxiv.org/pdf/1706.08605.pdf ... #proglang #ml
+wespiser,2017-06-27 15:06:53,why not 20 or 30? The problem with this prediction is it's really pessimistic and we don't model emerging technology
+wespiser,2017-06-27 14:24:24,I was paid not a lot of money to code in Haskell.
+wespiser,2017-06-27 14:21:09,Jaynes Book on Probability Logic and Science
+wespiser,2017-06-22 15:43:05,Best technical book In a while Designing Data-Intensive Applications -- by Martin Kleppmann http://dataintensive.net/  via @intensivedata
+wespiser,2017-05-31 06:14:18,"@grdvnl Hello I saw your ""Read you a Scotty"". Great work! Its been very helpful!"
+wespiser,2017-03-26 11:11:16,Towards a glossary of Haskell terms? https://torchhound.github.io/posts/haskellOneSentence.html ... #Haskel #learn
+wespiser,2017-03-21 11:42:08,did this ever get any traction? I'm looking for a React/redux project and think this is perfect
+wespiser,2017-03-12 08:23:11,Fully backed and half backed what I deal with to get stuff done #JavaScript #languageDesign
+wespiser,2017-03-05 04:42:02,thanks for the input! This made my day!
+wespiser,2017-02-09 23:03:57,Verifying myself: I am adamwespiser on Keybase.io. YZz87iPalDIoNxR0NEHQec3bpMC-JoA35LDF /https://keybase.io/adamwespiser/sigs/YZz87iPalDIoNxR0NEHQec3bpMC-JoA35LDF ...
+wespiser,2017-01-27 17:10:54,@vlcrain :)
+wespiser,2017-01-05 03:34:10,thank you for a great language
+wespiser,2016-12-29 04:01:29,Idris evaluation: mixture of explicit environment passing to return a state monad value! http://goo.gl/KpSyhU  #Haskell
+wespiser,2016-12-26 06:22:02,A benchmark comparing the performance of different free monad implementations. http://goo.gl/WQeEP5  #haskell #freemonad
+wespiser,2018-10-09 19:38:24,Sometimes perl one liners with special vars do a really nice job at this !
+wespiser,2018-10-05 17:40:36,"This is the same concept as ""break in tools"": devices built for the purposes of defeating locks. Not illegal on their own but given their intended use they become illegal."
+wespiser,2018-10-05 17:37:43,"These guys made a phone whose feature was ""evade law enforcement"" and sold it as such to people they had reason to believe would use it to break the law"
+wespiser,2018-10-03 20:29:58,I would def be interested !
+wespiser,2018-10-01 01:14:23,Super Cool: https://arxiv.org/pdf/1809.10756.pdf ...
+wespiser,2018-09-29 17:23:49,By natural vaccination I mean immunization!
+wespiser,2018-09-29 17:15:00,Yea I think natural vaccination would be close to it...see input once react uniquely subsequent input interactions are mediated by that information and don't cause the same reaction!
+wespiser,2018-09-27 03:42:01,"Do you think anything else significant will be built on distributed consensus algos like blockchain? I've kind of been wondering where the next ""killer app"" like bitcoin is..."
+wespiser,2018-09-27 03:27:18,Except my brain is a compiler with some pretty bad error messages...
+wespiser,2018-09-17 00:24:59,Don't worry the empire will strike back! #tombradyGOAT
+wespiser,2018-09-14 03:50:26,It's good but there is only one independent organization USN that does full carrier ops where as many independent organizations run sequencers!
+wespiser,2018-09-14 03:43:01,Can I get a fastmail invite if it works out? I'm trying to de-googleplex myself and it's hard 
+wespiser,2018-07-21 00:50:38,I'd really like to see a #metoo movement for shitty professors !
+wespiser,2018-07-06 02:53:50,Who put the amusement park in the waste treatment center ?
+wespiser,2018-06-07 20:54:17,Thank you !
+wespiser,2018-05-30 02:32:11,Thanks! I love these white papers !
+wespiser,2018-05-14 16:50:59,@eggheadio Can I contact someone from customer support?
+wespiser,2018-05-07 22:45:15,What about process calculus + DSL + Maybe Causality? I saw some of your slides that mentioned 2/3
+wespiser,2018-04-29 03:13:58,Let's start a band !
+wespiser,2018-04-29 03:13:38,For formatting/typographic reasons ie markdown one space after a sentence is much better!
+wespiser,2018-04-29 00:15:23,MBAs might be worthless :https://www.theguardian.com/news/2018/apr/27/bulldoze-the-business-school ...
+wespiser,2018-04-26 01:49:37,But it's the slow compile times that give me time to reason about the complexity of the type extensions !
+wespiser,2018-04-11 14:39:26,https://jobs.lever.co/collegevine 
+wespiser,2018-04-07 03:54:14,DS9 is the best
+wespiser,2018-04-01 14:46:11,this is in pretty bad taste
+wespiser,2018-03-31 21:52:22,"me too! Differential programming on the GPU has application much wider than ""deep learning."
+wespiser,2018-03-26 13:40:43,I used to think we needed Type Theory to ensure correctness turns out we can use deep learning: https://arxiv.org/pdf/1803.08793.pdf ...
+wespiser,2018-03-23 13:40:20,I use twitter to follow a couple technical fields. Can I get a version of the platform minus all the politics ?
+wespiser,2018-03-23 00:06:56,I was hoping you'd find that article !
+wespiser,2018-03-21 16:46:39,congrats! I strongly support this work!
+wespiser,2018-03-21 15:24:28,what? I can't hear you?
+wespiser,2018-03-19 14:04:11,they spent $7 mil on data collection ? Wow
+wespiser,2018-03-13 02:47:40,awesome work! Someone just asked me to do this!
+wespiser,2018-03-12 14:46:19,so true this is a major hurdle for learning new things in data science and machine learning
+wespiser,2018-03-12 14:45:07,interesting...Ogawa doesn't check my Id :)
+wespiser,2018-03-04 02:19:51,they started the enlightenment and have been coasting from there ...
+wespiser,2018-02-25 21:24:02,What's the coolest thing about 2018? GPU support for almost all my scientific computing packages !
+wespiser,2018-02-15 13:59:34,really? I think Great Britain would argue it helped them win a war!
+wespiser,2018-02-12 17:04:57,Taking the fast ai deep learning course: http://course.fast.ai/  so far so good!
+wespiser,2018-02-07 20:40:23,looking for resources ! Thank you!
+wespiser,2018-02-07 20:40:05,Does anyone do #datascience in sprint cycles? By this I mean exploratory Analysis exp. design algorithm/statistical modeling ?
+wespiser,2018-02-02 22:14:24,I feel like I heard about this years ago passwords that you couldn't give up even if you wanted to !
+wespiser,2018-02-02 22:13:48,do you mean a system wherein the computer interrogates a password from some non transferable user action?
+wespiser,2018-01-31 20:09:16,research? This article sites a figure in total revenue and an online review...that's your research!
+wespiser,2018-01-31 00:39:18,The future's made of virtual insanity! https://nicholas.carlini.com/code/audio_adversarial_examples/ ...
+wespiser,2018-01-26 14:06:00,"I think that's called ""covering your ass""  not sure on the literature term though.... :)"
+wespiser,2018-01-26 00:36:18,do you think there could be a a feasible LLVM backend for a Monte Carlo based prob. Prog language?
+wespiser,2018-01-25 23:54:20,your fine. It sounds like imposter syndrome!
+wespiser,2018-01-23 23:57:24,back in 2009 my first Linux box didn't have WiFi support...for 6 months. I don't miss the old days!
+wespiser,2018-01-23 23:56:33,my new laptop comes tomorrow discrete GPU and 4K: from what I hear it could be a hassle!
+wespiser,2018-01-23 23:37:26,yea the automatic diff as a language feature over all primops  sounds tedious
+wespiser,2018-01-22 23:31:42,neither! Both are transformations into string space!
+wespiser,2018-01-21 19:10:18,git push --force ... unleash the power!
+wespiser,2018-01-18 19:01:53,nothing is as good as pen and paper for ideas: writing + formula + diagrams. You can't beat it!
+wespiser,2018-01-17 02:10:18,yea she was on my qual committee. Didn't go well...
+wespiser,2018-01-17 00:47:48,Individual fit better than average fit for planes: https://www.thestar.com/amp/news/insight/2016/01/16/when-us-air-force-discovered-the-flaw-of-averages.html ...
+wespiser,2018-01-16 18:30:15,good luck!
+wespiser,2018-01-16 18:26:55,just happened to me lodge a complaint with the retailer ASAP. They might resend
+wespiser,2018-01-14 18:53:02,can you get it unkilled?
+wespiser,2018-01-14 18:52:37,Thanks for sharing! I'll be really interested to see where they go with this!
+wespiser,2018-01-13 18:11:13,the holy grail of computational biology: protein folding !
+wespiser,2018-01-12 20:05:16,I would definitely be interested !
+wespiser,2018-01-12 02:36:38,exciting stuff!
+wespiser,2018-01-11 02:07:43,"or what I lovingly call ""research code"""
+wespiser,2018-01-11 02:03:11,I read bad-but-right as poorly engineered but meets spec!
+wespiser,2018-01-11 01:22:37,"they both have value: you need to understand ""right"" to work with others and ""good"" to do good work!"
+wespiser,2018-01-10 09:12:04,yea I'm doing this now. Or trying to!
+wespiser,2018-01-10 04:50:25,#inferdotnet looks great! Expectation prop is great!
+wespiser,2018-01-10 02:23:35,this will be a great test of the new deep learning approaches to sequence models!
+wespiser,2018-01-10 02:15:52,but my view of what AI can actually do is extremely skeptical by my experience: the tech singularity is a left field idea!
+wespiser,2018-01-10 02:14:09,I work in machine learning so getting excited about AI is part of my job but post scarcity is a thought experiment!
+wespiser,2018-01-10 00:07:56,me either I read Doing Bayesian Analysis years ago eventually a problem came up where I needed to use STAN!
+wespiser,2018-01-09 23:46:08,Gelman has pretty good coverage of the topic in Bayesian Data Analysis last I checked !
+wespiser,2018-01-09 23:44:51,I can see that!
+wespiser,2018-01-09 23:27:36,missing by value of data too!
+wespiser,2018-01-09 22:31:37,keep going!
+wespiser,2018-01-06 19:35:56,@StephenPiment 100% agree the unifying paradigm is stochastic gradient descent of a given loss fn
+wespiser,2018-01-06 19:31:50,@michaelhoffman perhaps more fundamental? Consider Hintons  number of synapses per second of life: unknown param space ?
+wespiser,2018-01-06 05:12:46,haha right when I read that I was lowering divergent transitions on a model whose coefficients will go into production.
+wespiser,2018-01-05 21:41:54,still going to worry thank you very much!
+wespiser,2018-01-04 05:46:48,i wonder if we will see adversarial hacks for seq2seq models in audio or word space ?
+wespiser,2018-01-04 05:37:07,someday maybe soon these adversarial examples may begin to look like optical illusions
+wespiser,2018-01-02 02:29:25,http://www.wildml.com/2017/12/ai-and-deep-learning-in-2017-a-year-in-review/ ...
+wespiser,2018-01-01 18:41:10,data science toolkit for exploratory data analysis in #haskell lots of issues at the interface between types and usability
+wespiser,2018-01-01 18:28:35,Type theory should be used in programming as geometric algebra is used to formulate the Maxwell Equations: to simplify complexity!
+wespiser,2018-01-01 03:23:06,love that small time language charm!
+wespiser,2017-12-29 22:20:31,@hadleywickham well it could easily be the case that 1) the company is small or new and 2) the position is the first DS hire!
+wespiser,2017-12-29 03:48:52,yea about 1/3 of people don't drink for whatever reason
+wespiser,2017-12-29 03:46:18,@mankykitty I second this there is just so much downside to this. And really if it's not a bar don't serve booze
+wespiser,2017-12-24 17:07:27,geometric algebra with multivector derivatives: http://docs.sympy.org/0.7.4.1/modules/galgebra/GA.html#multivector-derivatives ...
+wespiser,2017-12-24 16:58:29,https://peerj.com/articles/cs-103/ ...
+wespiser,2017-12-19 03:25:01,Good see that nice historical outer look? Yea that's taking years of repairs to keep up!
+wespiser,2017-12-19 03:22:04,The bane of my daily commute !!!
+wespiser,2017-12-19 03:20:43,Could be a good time to do some reading on algorithms or CS cross training? Honestly I wouldn't worry about it you've had a pretty good year!
+wespiser,2017-12-11 19:40:56,haters gonna hate I'm going all in on black I mean btc
+wespiser,2017-12-08 02:22:04,thank you! I just finished up a blog on daily arxiv papers I liked the first one? Yours! https://wespiser.com/posts/Year-Of-Arxiv-Daily-Digests-%24.html ...
+wespiser,2017-12-08 02:18:23,don't worry your work and writing  is making a big impact at my company so goal obtained sample size = 1
+wespiser,2017-11-28 03:10:26,Awesome! I've been working through MacDonald's Vector and Geometric Calculus book this fall! Great work!
+wespiser,2017-11-27 22:30:59,https://blog.jle.im/entry/hamiltonian-dynamics-in-haskell.html#.WhxsWceee6Y.twitter ...
+wespiser,2017-11-21 17:05:43,yea but that was never really the argument
+wespiser,2017-11-11 03:37:45,"""One regrettable step in this line of research was my failure to recognize causation as totally a distinct ingredient different from all the probabilistic notions that support evidential reasoning and statistical inference"" Judea Pearl. http://ftp.cs.ucla.edu/pub/stat_ser/r331.pdf ..."
+wespiser,2017-10-26 00:24:05,@dtseng123 @github great work folks. I look forward to watching you grow your business !
+wespiser,2017-10-26 00:23:11,that's NLP for ya!
+wespiser,2017-10-21 23:32:35,sign me up for a two week stay at the Haskell hostel ! My bags are packed waiting for further instructions....
+wespiser,2017-10-20 20:37:18,I still contend junk is not a bad description
+wespiser,2017-10-12 14:47:33,A Formalism for Stream Graphs: great work! https://arxiv.org/abs/1710.04073 
+wespiser,2017-10-09 03:39:07,but EXPLOSIONS
+wespiser,2017-09-22 23:58:27,there's no STAN release that supports GPU ops there is some interest so hopefully in a few years!
+wespiser,2017-09-22 23:47:06,rethinking is really good that book got me into STAN!
+wespiser,2017-09-22 23:44:23,there is a whole secondary market of packages transpiling r models to STAN like stanarm or brms
+wespiser,2017-09-22 23:42:08,I write the models in actual STAN which took a little time to learn but gives so much more flexibility
+wespiser,2017-09-22 23:09:28,Wow spent the last few weeks using STAN are we in the age of practical Bayesian statistics ? http://mc-stan.org  #bayes #rstats
+wespiser,2017-09-22 18:12:03,what about when the stock splits or when there are multiple issuers ?
+wespiser,2017-09-19 22:45:12,imagine yourself with an unrelated degree the path to where you are is not easy
+wespiser,2017-09-19 21:58:15,dude you can't worry about it. I majored in biology everything I used today at work I taught myself since I graduated.
+wespiser,2017-09-13 00:55:08,your runtime error my runtime error our pains are one! But check out #pipelinedb
+wespiser,2017-09-12 14:55:39,Great! how soon after I start can I expect to be burnt out?
+wespiser,2017-09-10 23:05:33,what about statistical software? We have the maths on our side but sometimes that feels like the only thing!
+wespiser,2017-09-10 04:20:03,is there any evidence to suggest an acceptable  governmental policy can impact climate change?
+wespiser,2017-09-10 00:29:04,when all you have is a hammer....keep breaking glass????
+wespiser,2017-09-10 00:27:49,@pathogenomenick yea is the post doc needed to run it available upon request as well?
+wespiser,2017-09-10 00:26:11,@thatdnaguy save the money for now -- wait till the first modeling problem you are working on then buy the reference works
