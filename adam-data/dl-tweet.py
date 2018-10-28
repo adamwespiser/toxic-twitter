@@ -15,7 +15,6 @@ def get_user_tweets(user,limit=2000):
         if user == tweet.user:
             yield [tweet.user,tweet.timestamp, clean_tweet(tweet.text)]
 
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("user", help="download this users tweets")
