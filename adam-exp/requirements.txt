@@ -1,2 +1,6 @@
 keras
 sklearn
+matplotlib
+tensorflow
+unidecode
+
