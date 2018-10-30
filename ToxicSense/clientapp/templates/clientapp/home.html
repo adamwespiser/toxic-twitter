@@ -4,11 +4,28 @@
         <meta charset="utf-8" />
         <title>{{ title }}</title>
         {% load static %}
-        <link rel="stylesheet" type="text/css" href="{% static 'clientapp/site.css' %}" />
+        <link rel="icon" href="{% static 'clientapp/img/favicon.ico' %}">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="{% static 'clientapp/css/site.css' %}" />
     </head>
     <body>
-        Hello from ToxicSense!
-
-        <script src="{% static 'clientapp/site.js' %}"></script>
+        <div class="container">
+            <h2>ToxicSense</h2>
+            <br/>
+            <div class="form-group">
+                <label class="form-text">Enter a topic</label>
+                <input type="text" maxlength=100 id="topic" class="form-control" placeholder="Election, MeToo etc." />
+            </div>
+            <button type="submit" id="topicsearch" class="btn btn-primary">Analyze tweets</button>
+            <span class="loading-container" id="loading"><img src="{% static 'clientapp/img/loading.gif' %}" alt="Loading..." /></span>
+            <hr />
+            <div id="results" class="result-container col-md-12">
+                <pre id="jsonResult">Results will be displayed here.</pre>
+            </div>
+        </div>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+        <script src="{% static 'clientapp/js/site.js' %}"></script>
     </body>
 </html>

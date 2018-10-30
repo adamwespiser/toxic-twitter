@@ -1,0 +1,20 @@
+body {
+    font-weight: 600;
+    color: black;
+    margin-top: 20px;
+}
+
+pre {
+    padding: 10px 10px;
+    white-space: pre-wrap;
+    height: 95%;
+    background: #eee;
+}
+
+.result-container {
+    height: 450px;
+}
+
+.loading-container {
+    padding-left: 10px;
+}

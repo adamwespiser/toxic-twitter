@@ -3,4 +3,5 @@ from clientapp import views
 
 urlpatterns = [
     path("", views.home, name="home"),
+    path("analyze", views.analyze_tweets, name="analyze_tweets")
 ]
