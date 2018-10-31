@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 from django.utils import html
 from toxicityanalyzer import toxicityanalyzer
 
-from twitterscraper import query_tweets
+from twitterscraper.query import query_tweets, query_tweets_from_user
 
 def home(request):
     return render(
@@ -31,7 +31,25 @@ def analyze_tweets(request):
         })
     return JsonResponse(result, safe=False)
 
+def analyze_user_tweets(request):
+    user = request.GET.get('user')
+    tweets = get_tweets_from_user(user)
+    result = []
+    for tweet in tweets:
+        result.append({
+            'user': tweet.user,
+            'timestamp': tweet.timestamp,
+            'text': html.escape(tweet.text),
+            'toxicity': toxicityanalyzer.get_toxicity(tweet.text)
+        })
+    return JsonResponse(result, safe=False)
+
 def get_tweets(topic):
-    tweets = query_tweets(topic, limit=1)
+    tweets = query_tweets(topic, limit=100)
+    tweets.reverse()
+    return tweets
+
+def get_tweets_from_user(user):
+    tweets = query_tweets_from_user(user, limit=100)
     tweets.reverse()
     return tweets

@@ -12,20 +12,34 @@
         <div class="container">
             <h2>ToxicSense</h2>
             <br/>
-            <div class="form-group">
-                <label class="form-text">Enter a topic</label>
-                <input type="text" maxlength=100 id="topic" class="form-control" placeholder="Election, MeToo etc." />
+            <div class="row">
+                <div class="col-md-6" style="border-right: 1px solid #bbb">
+                    <div class="form-group">
+                        <label class="form-text">Enter a topic</label>
+                        <input type="text" maxlength=100 id="topic" class="form-control" placeholder="Election, MeToo etc." />
+                    </div>
+                    <button type="submit" id="topicsearch" class="btn btn-primary">Analyze tweets</button>
+                    <span class="loading-container" id="loading"><img src="{% static 'clientapp/img/loading.gif' %}" alt="Loading..." /></span>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-text">Enter a username</label>
+                        <input type="text" maxlength=100 id="user" class="form-control" placeholder="realDonaldTrump etc." />
+                    </div>
+                    <button type="submit" id="usersearch" class="btn btn-primary">Analyze user</button>
+                    <span class="loading-container" id="loadinguser"><img src="{% static 'clientapp/img/loading.gif' %}" alt="Loading..." /></span>
+                </div>
             </div>
-            <button type="submit" id="topicsearch" class="btn btn-primary">Analyze tweets</button>
-            <span class="loading-container" id="loading"><img src="{% static 'clientapp/img/loading.gif' %}" alt="Loading..." /></span>
             <hr />
             <div id="results" class="result-container col-md-12">
                 <pre id="jsonResult">Results will be displayed here.</pre>
             </div>
         </div>
         
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
-        <script src="{% static 'clientapp/js/site.js' %}"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="{% static 'clientapp/js/visualizations.js' %}"></script>
+        <script type="text/javascript" src="{% static 'clientapp/js/site.js' %}"></script>
     </body>
 </html>

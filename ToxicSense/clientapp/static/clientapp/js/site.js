@@ -1,28 +1,68 @@
 $(document).ready(function() {
-    $('#loading').hide();
+    hideLoading();
+    hideLoadingUser();
 });
 
+// Topic analysis
 $('#topicsearch').click(analyze);
 $('#topic').on('keypress', function(e) {
     if (e.keyCode == 13) {
         analyze();
     }
 });
-
 function analyze() {
     var topic = $('#topic').val();
     if (!topic.trim() || topic.length < 2) {
         return;
     }
 
-    $('#topicsearch').attr("disabled", "disabled");
-    $('#loading').show();
+    showLoading();
     $.get('/analyze', {topic:topic})
-     .done(function(response) {
-        $('#topicsearch').removeAttr("disabled");
-        $('#loading').hide();
-        var jsonResponse = JSON.stringify(response, undefined, 2);
-        jsonResponse = jsonResponse.replace(/(?:\r\n|\r|\n)/g, '<br>');
-        $('#jsonResult').html(jsonResponse);
-     });
+     .done(receiveData);
+}
+function hideLoading() {
+    $('#topicsearch').removeAttr("disabled");
+    $('#usersearch').removeAttr("disabled");
+    $('#loading').hide();
+}
+function showLoading() {
+    $('#topicsearch').attr("disabled", "disabled");
+    $('#usersearch').attr("disabled", "disabled");
+    $('#loading').show();
+}
+function receiveData(response) {
+    hideLoading();
+    visualizeTopicTweets(response);
+}
+
+// User analysis
+$('#usersearch').click(analyzeUser);
+$('#user').on('keypress', function(e) {
+    if (e.keyCode == 13) {
+        analyzeUser();
+    }
+});
+function analyzeUser() {
+    var user = $('#user').val();
+    if (!user.trim() || user.length < 2) {
+        return;
+    }
+
+    showLoadingUser();
+    $.get('/analyzeuser', {user:user})
+     .done(receiveUserData);
+}
+function hideLoadingUser() {
+    $('#topicsearch').removeAttr("disabled");
+    $('#usersearch').removeAttr("disabled");
+    $('#loadinguser').hide();
+}
+function showLoadingUser() {
+    $('#topicsearch').attr("disabled", "disabled");
+    $('#usersearch').attr("disabled", "disabled");
+    $('#loadinguser').show();
+}
+function receiveUserData(response) {
+    hideLoadingUser();
+    visualizeUserTweets(response);
 }
