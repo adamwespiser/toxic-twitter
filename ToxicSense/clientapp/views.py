@@ -18,6 +18,7 @@ def home(request):
         }
     )
 
+
 def analyze_tweets(request):
     search_term = request.GET.get('topic')
     tweets = get_tweets(search_term)
@@ -30,6 +31,7 @@ def analyze_tweets(request):
             'toxicity': toxicityanalyzer.get_toxicity(tweet.text)
         })
     return JsonResponse(result, safe=False)
+
 
 def analyze_user_tweets(request):
     user = request.GET.get('user')
@@ -45,12 +47,14 @@ def analyze_user_tweets(request):
             })
     return JsonResponse(result, safe=False)
 
+
 def get_tweets(topic):
     tweets = query_tweets(topic, limit=100)
     tweets.reverse()
     return tweets
 
+
 def get_tweets_from_user(user):
-    tweets = query_tweets("@" + user, limit=2000)
+    tweets = query_tweets("@" + user, limit=100)
     tweets.reverse()
     return tweets
