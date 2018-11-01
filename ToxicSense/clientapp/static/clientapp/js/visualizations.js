@@ -11,8 +11,6 @@ function visualizeTopicTweets(data) {
 
     var dataset = data.map(function(obj){
         var rObj = {}
-        console.log(obj.timestamp);
-        console.log(parseDate(obj.timestamp));
         rObj['date'] = parseDate(obj.timestamp);
         rObj['tweet'] = obj.text;
         rObj['user'] = obj.user;
@@ -20,7 +18,6 @@ function visualizeTopicTweets(data) {
         return(rObj);
       });
 
-    console.log(dataset)
     svgHeight = 327
     svgWidth = 900
     var margin = {top: 60, right: 100, bottom: 40, left: 100},
@@ -46,7 +43,7 @@ function visualizeTopicTweets(data) {
 
     // NOTE: this is a pretty ugly external linkage...
     // but we need to clear the text before we make the plot
-    document.getElementById("jsonResult").textContent = ""
+    $("#jsonResult").empty()
 
 
     // Create the svg element to put our plot on
