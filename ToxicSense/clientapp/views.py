@@ -36,12 +36,13 @@ def analyze_user_tweets(request):
     tweets = get_tweets_from_user(user)
     result = []
     for tweet in tweets:
-        result.append({
-            'user': tweet.user,
-            'timestamp': tweet.timestamp,
-            'text': html.escape(tweet.text),
-            'toxicity': toxicityanalyzer.get_toxicity(tweet.text)
-        })
+        if tweet.user == user:
+            result.append({
+                'user': tweet.user,
+                'timestamp': tweet.timestamp,
+                'text': html.escape(tweet.text),
+                'toxicity': toxicityanalyzer.get_toxicity(tweet.text)
+            })
     return JsonResponse(result, safe=False)
 
 def get_tweets(topic):
@@ -50,6 +51,6 @@ def get_tweets(topic):
     return tweets
 
 def get_tweets_from_user(user):
-    tweets = query_tweets_from_user(user, limit=100)
+    tweets = query_tweets("@" + user, limit=2000)
     tweets.reverse()
     return tweets
