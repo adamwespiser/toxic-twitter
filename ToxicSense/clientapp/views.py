@@ -9,6 +9,7 @@ from toxicityanalyzer import toxicityanalyzer
 
 from twitterscraper.query import query_tweets, query_tweets_from_user
 
+
 def home(request):
     return render(
         request,
@@ -55,6 +56,6 @@ def get_tweets(topic):
 
 
 def get_tweets_from_user(user):
-    tweets = query_tweets("@" + user, limit=100)
+    tweets = query_tweets_from_user(user, limit=100)
     tweets.reverse()
     return tweets
