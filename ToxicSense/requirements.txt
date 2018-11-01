@@ -20,3 +20,4 @@ wrapt==1.10.11
 unidecode
 keras
 tensorflow
+numpy
