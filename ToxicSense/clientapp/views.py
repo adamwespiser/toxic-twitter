@@ -46,11 +46,11 @@ def analyze_user_tweets(request):
     return JsonResponse(result, safe=False)
 
 def get_tweets(topic):
-    tweets = query_tweets(topic, limit=100)
+    tweets = query_tweets(topic, limit=2000)
     tweets.reverse()
     return tweets
 
 def get_tweets_from_user(user):
-    tweets = query_tweets("@" + user, limit=2000)
+    tweets = query_tweets_from_user(user, limit=2000)
     tweets.reverse()
     return tweets
