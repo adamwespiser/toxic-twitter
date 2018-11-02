@@ -339,5 +339,11 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Nachi Experiments
+nachi-exps/glove-twitter-27B
+**/.ipynb_checkpoints
+**/.idea
+
+
 
 # End of https://www.gitignore.io/api/macos,linux,python,django,pycharm,windows,visualstudiocode
