@@ -10,12 +10,13 @@ function visualizeTopicTweets(data) {
     var parseDate = d3.time.format("%Y-%m-%dT%H:%M:%S").parse;
 
     var dataset = data.map(function(obj){
-        var rObj = {}
-        rObj['date'] = parseDate(obj.timestamp);
-        rObj['tweet'] = obj.text;
-        rObj['user'] = obj.user;
-        rObj['toxicity'] = obj.toxicity;
-        return(rObj);
+        var rObj = {
+          'date': parseDate(obj.timestamp),
+          'tweet': obj.text,
+          'user': obj.user,
+          'toxicity': obj.toxicity
+        }
+        return rObj;
       });
 
     svgHeight = 327

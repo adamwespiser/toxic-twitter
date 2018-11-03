@@ -4,10 +4,9 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.shortcuts import redirect
-from django.utils import html
-from toxicityanalyzer import toxicityanalyzer
 
-from twitterscraper.query import query_tweets, query_tweets_from_user
+from data_fetch_helpers import constants as data_fetch_constants
+from data_fetch_helpers import public as data_fetch_public
 
 
 def home(request):
@@ -22,40 +21,21 @@ def home(request):
 
 def analyze_tweets(request):
     search_term = request.GET.get('topic')
-    tweets = get_tweets(search_term)
-    result = []
-    for tweet in tweets:
-        result.append({
-            'user': tweet.user,
-            'timestamp': tweet.timestamp,
-            'text': html.escape(tweet.text),
-            'toxicity': toxicityanalyzer.get_toxicity(tweet.text)
-        })
+    tweets = data_fetch_public.get_tweets_from_search(
+        search_term, 15, data_fetch_constants.DATA_SOURCE_TWITTER_SCRAPER
+    )
+    result = [tweet.to_dict() for tweet in tweets]
     return JsonResponse(result, safe=False)
 
 
 def analyze_user_tweets(request):
     user = request.GET.get('user')
-    tweets = get_tweets_from_user(user)
-    result = []
-    for tweet in tweets:
-        if tweet.user == user:
-            result.append({
-                'user': tweet.user,
-                'timestamp': tweet.timestamp,
-                'text': html.escape(tweet.text),
-                'toxicity': toxicityanalyzer.get_toxicity(tweet.text)
-            })
+    tweets = data_fetch_public.get_tweets_of_user(
+        user, 15, data_fetch_constants.DATA_SOURCE_TWITTER_SCRAPER
+    )
+    result = [
+        tweet.to_dict()
+        for tweet in tweets
+        if tweet.user == user
+    ]
     return JsonResponse(result, safe=False)
-
-
-def get_tweets(topic):
-    tweets = query_tweets(topic, limit=100)
-    tweets.reverse()
-    return tweets
-
-
-def get_tweets_from_user(user):
-    tweets = query_tweets_from_user(user, limit=100)
-    tweets.reverse()
-    return tweets

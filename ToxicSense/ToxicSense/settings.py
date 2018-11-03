@@ -25,9 +25,7 @@ SECRET_KEY = 'DummyValue-2yo*+!$-1%2s%)51x50!u4cu5uk9ve@xxx87w=qe(6@=770#+y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'django-toxic-sense-dev.us-east-1.elasticbeanstalk.com'
-]
+ALLOWED_HOSTS = []
 
 
 # Application definition
