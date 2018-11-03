@@ -22,7 +22,7 @@ def home(request):
 def analyze_tweets(request):
     search_term = request.GET.get('topic')
     tweets = data_fetch_public.get_tweets_from_search(
-        search_term, 15, data_fetch_constants.DATA_SOURCE_TWITTER_SCRAPER
+        search_term, 15, data_fetch_constants.DATA_SOURCE_TWITTER_API
     )
     result = [tweet.to_dict() for tweet in tweets]
     return JsonResponse(result, safe=False)
