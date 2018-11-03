@@ -15,6 +15,10 @@ class ScraperIntegration(ApiIntegration):
         return tweet.Tweet.create_from_scraper_response(tweets)
     
     def get_tweets_from_search(self, search_term, limit):
+        """
+        Note:
+            Limit value is not honored by the scraper.
+        """
         tweets = query_tweets(search_term, limit=limit)
         tweets.reverse()
         return tweet.Tweet.create_from_scraper_response(tweets)
