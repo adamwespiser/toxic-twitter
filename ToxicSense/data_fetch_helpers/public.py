@@ -1,3 +1,4 @@
+import time
 from data_fetch_helpers import constants
 from data_fetch_helpers.official_api_integration import api_integration as official_api
 from data_fetch_helpers.scraper_integration import api_integration as scraper_api
@@ -9,8 +10,12 @@ def get_tweets_of_user(
     data_source=constants.DATA_SOURCE_TWITTER_SCRAPER
 ):
     print('Tweets for user: ', username, 'using', data_source)
+    start = time.time()
     api = _get_api(data_source)
-    return api.get_user_tweets(username, limit=limit)
+    result = api.get_user_tweets(username, limit=limit)
+    end = time.time()
+    print('Took', end - start, 'seconds')
+    return result
 
 
 def get_tweets_from_search(
@@ -18,8 +23,12 @@ def get_tweets_from_search(
     data_source=constants.DATA_SOURCE_TWITTER_SCRAPER
 ):
     print('Tweets for search: ', search_term, 'using', data_source)
+    start = time.time()
     api = _get_api(data_source)
-    return api.get_tweets_from_search(search_term, limit=limit)
+    result = api.get_tweets_from_search(search_term, limit=limit)
+    end = time.time()
+    print('Took', end - start, 'seconds')
+    return result
 
 
 def _get_api(data_source):
