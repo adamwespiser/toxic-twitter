@@ -1,6 +1,7 @@
 from data_fetch_helpers import constants
 from data_fetch_helpers.official_api_integration import api_integration as official_api
 from data_fetch_helpers.scraper_integration import api_integration as scraper_api
+from data_fetch_helpers.tweepy_integration import api_integration as tweepy_api
 
 
 def get_tweets_of_user(
@@ -24,5 +25,7 @@ def get_tweets_from_search(
 def _get_api(data_source):
     if data_source == constants.DATA_SOURCE_TWITTER_API:
         return official_api
+    elif data_source == constants.DATA_SOURCE_TWEEPY:
+        return tweepy_api
     else:
         return scraper_api
