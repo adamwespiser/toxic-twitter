@@ -1,4 +1,5 @@
 import time
+from datetime import datetime
 
 from django.utils import html
 
@@ -33,6 +34,18 @@ class Tweet:
             tweet = Tweet()
             tweet.user = response.user
             tweet.timestamp = response.timestamp
+            tweet.text = response.text
+            tweets.append(tweet)
+        return tweets
+
+    @staticmethod
+    def create_from_tweepy_response(responses):
+        tweets = []
+        OUR_DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%S'
+        for response in responses:
+            tweet = Tweet()
+            tweet.user = response.user.screen_name
+            tweet.timestamp = response.created_at.strftime(OUR_DATETIME_FORMAT)
             tweet.text = response.text
             tweets.append(tweet)
         return tweets
