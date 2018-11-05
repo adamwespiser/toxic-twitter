@@ -1,0 +1,20 @@
+{
+    "name": "ToxicSense",
+    "version": "1.0",
+    "description": "Analyze the toxicity of comments in social media.",
+    "manifest_version": 2,
+    "permissions": ["activeTab"],
+    "browser_action": {
+        "default_popup": "popup.html",
+        "default_icon": "img/icon.png",
+        "default_title": "ToxicSense"
+    },
+    "content_scripts": [
+        {
+            "run_at" :"document_end",
+            "matches": ["https://twitter.com/*"],
+            "js": ["js/jquery-3.3.1.min.js", "js/script.js"],
+            "css":["css/stylesheet.css"]
+        }],
+    "web_accessible_resources":["img/*.png"]
+  }
