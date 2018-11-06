@@ -1,9 +1,104 @@
-function visualizeUserTweets(data) {
-    // TODO: Replace content below with d3 implementation.
+function getToxicSenseScore(percent){
+  if(percent > 99){
+    return "green";
+  }
+  if (percent > 95){
+    return "yellow";
+  }
+  return "red";
+}
+function colorTweetByToxicity(toxicity){
+  if(toxicity > 0.6){
+    return "red"
+  }
+  return "black"
+}
 
-    var jsonResponse = JSON.stringify(data, undefined, 2);
-    jsonResponse = jsonResponse.replace(/(?:\r\n|\r|\n)/g, '<br>');
-    $('#jsonResult').html(jsonResponse);
+
+function visualizeUserTweets(data) {
+  // This function creates a banner for ToxicSense Score
+  // sets the toolip,
+  // the runs the visualization: time vs. toxicity
+    $("#bannerResult").empty()
+    var parseDate = d3.time.format("%Y-%m-%dT%H:%M:%S").parse;
+    var dataset = data.map(function(obj){
+        var rObj = {
+          'date': parseDate(obj.timestamp),
+          'tweet': obj.text,
+          'user': obj.user,
+          'toxicity': obj.toxicity
+        }
+        return rObj;
+      });
+
+    // Calculate the ToxicSense Score as the numerical percentage
+    // between 0 and 100, as...
+    // number of toxic tweets / all tweets * 100
+    num_tweets = dataset.length
+    tox_tweets = 0.6
+    num_toxic = dataset.filter(x => x.toxicity > tox_tweets).length;
+    percent_score = Math.round(100 * (num_tweets - num_toxic) / num_tweets);
+
+    // set svg size to meet contraints of rendered DOM
+    svgHeight = 90
+    svgWidth = 500
+    var margin = {top: 10, right: 10, bottom: 0, left: 10},
+
+    width = svgWidth - margin.left - margin.right,
+    height = svgHeight - margin.top - margin.bottom;
+
+    var svg = d3.select("#bannerResult")
+    .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+
+
+    var div = d3.select("#bannerResult").append("div")
+      .attr("class", "tooltiptox")
+      .style("opacity", 0);
+
+    // Set the ToxicSense Rect
+    // "red" for bad, "yellow" for okay, "green" iff perfect score
+    svg.append('rect')
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('height', 70)
+      .attr('width', 75)
+      .attr('fill', getToxicSenseScore(percent_score))
+      .on("mouseover", function(d) {
+             div.transition()
+                .duration(200)
+                .style("opacity", 1);
+              div.html("Your ToxSense Score is an index of overall social media behaviour.<br/> Scores range from 0(bad) to 100 (perfect)</br>See which messages lower your score below!")
+                .style("left", 100 + "px")
+                .style("top", 15 + "px");
+            })
+        .on("mouseout", function(d) {
+            div.transition()
+                .duration(500)
+                .style("opacity", 0);
+        });
+
+    // Append the 0 to 100 ToxicSense Score of the colored rect
+    svg.append("text")
+      .attr("x", 75/2 )
+      .attr("y", 50)
+      .style("text-anchor", "middle")
+      .style("font-weight", "bold")
+      .attr("font-family", "sans-serif")
+      .style("font-size", "36px")
+      .text(percent_score);
+
+    // Append the "ToxicSense Score" banner label
+    svg.append("text") .attr("x", 80)
+      .attr("y", 50)
+      .style("text-anchor", "left")
+      .style("font-weight", "normal")
+      .attr("font-family", "sans-serif")
+      .style("font-size", "36px")
+      .text("ToxicSense Score");
+
+    visualizeTopicTweets(data);
 }
 
 function visualizeTopicTweets(data) {
@@ -21,7 +116,7 @@ function visualizeTopicTweets(data) {
 
     svgHeight = 327
     svgWidth = 900
-    var margin = {top: 60, right: 100, bottom: 40, left: 100},
+    var margin = {top: 40, right: 100, bottom: 40, left: 100},
 
     width = svgWidth - margin.left - margin.right,
     height = svgHeight - margin.top - margin.bottom;
@@ -88,6 +183,9 @@ function visualizeTopicTweets(data) {
         .attr("r", 3.5)
         .attr("cx", function(d) { return x((d.date)); })
         .attr("cy", function(d) { return y(d.toxicity); })
+        .attr("fill", function(d) {
+          return colorTweetByToxicity(d.toxicity); 
+         })
         .on("mouseover", tipMouseover)
         .on("mouseout", tipMouseout);
 
@@ -106,18 +204,24 @@ function visualizeTopicTweets(data) {
     svg.append("text")
       .attr("x",-50)
       .attr("y",-10)
+      .attr("font-family", "sans-serif")
+      .style("font-weight", "normal")
       .text("Toxic");
 
     svg.append("text")
       .attr("x",-50)
       .attr("y",height + 35)
+      .attr("font-family", "sans-serif")
+      .style("font-weight", "normal")
       .text("Benign");
 
     // Make the X Axis Label
     svg.append("text")
       .attr("x",width - 30)
       .attr("y",height + 35)
-      .text("Year");
+      .attr("font-family", "sans-serif")
+      .style("font-weight", "normal")
+      .text("Time");
 
     // Make the plot title
     title = "Tweet Toxicity vs. Time";
@@ -125,8 +229,67 @@ function visualizeTopicTweets(data) {
       .attr("x", (width/2))
       .attr("y", -20)
       .style("text-anchor", "middle")
-      .style("font-weight", "bold")
+      .style("font-weight", "normal")
+      .attr("font-family", "sans-serif")
       .style("font-size", "16px")
       .text(title);
+
+
+    // Make the legend
+    const legendData = [["Toxic Message", "red", "circle"], ["Non-Toxic message", "black", "circle"]];
+
+    var legend = svg.append('g')
+        .attr("class", "legend1")
+        .attr("height", 0)
+        .attr("width", 0)
+        .attr('transform', 'translate(' + (width - margin.right)   + ',' + -30  + ')')
+
+    // Create the legend object
+    var legendRect = legend
+      .selectAll('g')
+      .data(legendData);
+
+    // Set up the right translate for each point in the legend
+    var legendRectE = legendRect.enter()
+      .append("g")
+      .attr("transform", function(d,i){
+        return 'translate(0, ' + (i * 13) + ')';
+      });
+
+    // make the legend "circles"
+    legendRectE
+      .append('circle')
+      .attr('r', 3.5)
+      .attr("opacity", 1)
+      .style("fill", function (d) { return d[1]; });
+
+
+    // Set the legend label
+    legendRectE
+      .append("text")
+      .attr("x", 10)
+      .attr("y", 5)
+      .attr("font-size", "12px")
+      .attr("font-weight", "normal")
+      .attr("font-family", "sans-serif")
+      .text(function (d) {
+          return d[0];
+      });
+
+
+
+    // put a rect around the legend
+    // TODO figure out a way to bind this to legendRectE
+    svg.append("rect")
+     .attr("height", 25)
+      .attr("width", 140)
+      .attr("x", width - margin.right - 10)
+      .attr("y",-35)
+      .attr("stroke","black")
+      .attr("fill", "none")
+      .attr("stroke-width",1)
+
+
+
 
 }
