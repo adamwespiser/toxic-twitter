@@ -32,6 +32,7 @@ function showLoading() {
 }
 function receiveData(response) {
     hideLoading();
+    hideUserToxSenseBanner();
     visualizeTopicTweets(response);
 }
 
@@ -62,7 +63,17 @@ function showLoadingUser() {
     $('#usersearch').attr("disabled", "disabled");
     $('#loadinguser').show();
 }
+function showUserToxSenseBanner(){
+    $('#bannerResult').show()
+}
+
+function hideUserToxSenseBanner(){
+    $('#bannerResult').hide()
+}
+
+
 function receiveUserData(response) {
     hideLoadingUser();
+    showUserToxSenseBanner()
     visualizeUserTweets(response);
 }

@@ -10,3 +10,16 @@ path {
     stroke-width: 2;
     shape-rendering: crispEdges;
 }
+div.tooltiptox {
+    position: absolute;
+    text-align: center;
+    width: 320px;
+    height: 70px;
+    padding: 2px;
+    font: 13px sans-serif;
+    background: lightsteelblue;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+}
+

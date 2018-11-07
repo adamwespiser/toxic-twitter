@@ -14,6 +14,9 @@ pre {
 .result-container {
     height: 450px;
 }
+.banner-container {
+    height: 100px;
+}
 
 .loading-container {
     padding-left: 10px;
