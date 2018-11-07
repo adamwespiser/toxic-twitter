@@ -1,3 +1,11 @@
+function visualizeTopicTweets(data) {
+    visualizeToxicityVsTime(data);
+}
+function visualizeUserTweets(data) {
+    visualizeToxicityVsTime(data);
+    visualizeToxicSenseScore(data);
+}
+
 function getToxicSenseScore(percent){
   if(percent > 99){
     return "green";
@@ -9,16 +17,17 @@ function getToxicSenseScore(percent){
 }
 function colorTweetByToxicity(toxicity){
   if(toxicity > 0.6){
-    return "red"
+    return "red";
   }
-  return "black"
+  if(toxicity > 0.2){
+    return "limegreen";
+  }
+  return "green"
 }
 
-
-function visualizeUserTweets(data) {
+function visualizeToxicSenseScore(data) {
   // This function creates a banner for ToxicSense Score
   // sets the toolip,
-  // the runs the visualization: time vs. toxicity
     $("#bannerResult").empty()
     var parseDate = d3.time.format("%Y-%m-%dT%H:%M:%S").parse;
     var dataset = data.map(function(obj){
@@ -57,6 +66,19 @@ function visualizeUserTweets(data) {
       .attr("class", "tooltiptox")
       .style("opacity", 0);
 
+    var mouseover = function(d) {
+        div.transition()
+           .duration(200)
+           .style("opacity", 1);
+        div.html("Your ToxicSense Score is an index of overall social media behaviour.<br/> Scores range from 0(bad) to 100 (perfect)</br>See which messages lower your score below!")
+            .style("left", 100 + "px")
+            .style("top", 15 + "px");
+      }
+    var mouseout = function(d) {
+        div.transition()
+           .duration(500)
+           .style("opacity", 0);
+        }
     // Set the ToxicSense Rect
     // "red" for bad, "yellow" for okay, "green" iff perfect score
     svg.append('rect')
@@ -65,19 +87,8 @@ function visualizeUserTweets(data) {
       .attr('height', 70)
       .attr('width', 75)
       .attr('fill', getToxicSenseScore(percent_score))
-      .on("mouseover", function(d) {
-             div.transition()
-                .duration(200)
-                .style("opacity", 1);
-              div.html("Your ToxSense Score is an index of overall social media behaviour.<br/> Scores range from 0(bad) to 100 (perfect)</br>See which messages lower your score below!")
-                .style("left", 100 + "px")
-                .style("top", 15 + "px");
-            })
-        .on("mouseout", function(d) {
-            div.transition()
-                .duration(500)
-                .style("opacity", 0);
-        });
+      .on("mouseover", mouseover)
+      .on("mouseout", mouseout);
 
     // Append the 0 to 100 ToxicSense Score of the colored rect
     svg.append("text")
@@ -87,7 +98,9 @@ function visualizeUserTweets(data) {
       .style("font-weight", "bold")
       .attr("font-family", "sans-serif")
       .style("font-size", "36px")
-      .text(percent_score);
+      .text(percent_score)
+      .on("mouseover", mouseover)
+      .on("mouseout", mouseout);
 
     // Append the "ToxicSense Score" banner label
     svg.append("text") .attr("x", 80)
@@ -98,10 +111,9 @@ function visualizeUserTweets(data) {
       .style("font-size", "36px")
       .text("ToxicSense Score");
 
-    visualizeTopicTweets(data);
 }
 
-function visualizeTopicTweets(data) {
+function visualizeToxicityVsTime(data) {
     var parseDate = d3.time.format("%Y-%m-%dT%H:%M:%S").parse;
 
     var dataset = data.map(function(obj){
@@ -288,8 +300,4 @@ function visualizeTopicTweets(data) {
       .attr("stroke","black")
       .attr("fill", "none")
       .attr("stroke-width",1)
-
-
-
-
 }
