@@ -2,16 +2,68 @@ var baseUrl = "http://localhost:8000"; // In production this should be http://to
 
 $(document).ready(function() {
     $("h2.ProfileHeaderCard-screenname").each(function(index) {
-        injectToxicSenseHtml($(this));
+        injectToxicSenseHtmlUser($(this));
     });
     $("span.DashboardProfileCard-screenname").each(function(index) {
-        injectToxicSenseHtml($(this));
+        injectToxicSenseHtmlUser($(this));
+    });
+    $("h1.SearchNavigation-titleText").each(function(index) {
+        injectToxicSenseHtmlTopic($(this));
     });
 });
 
+var topicScoreMap = {};
+
+function injectToxicSenseHtmlTopic(jQueryElement) {
+    if (jQueryElement.find("span.toxicsense").length) {
+        // Aleady injected.
+        return;
+    }
+    var score = "";
+    var topic = jQueryElement.clone().children().remove().end().text().trim();
+    if (topic) {
+        if (topicScoreMap[topic]) {
+            // User was already analyzed.
+            score = topicScoreMap[topic];
+        } else {
+            $.get(baseUrl + '/analyze', {topic:topic}).done(function(response) {
+                score = handleUserData(response);
+                setTopicScore(topic, score);
+            });
+        }
+        var url = baseUrl + "?topic=" + encodeURIComponent(topic);
+        var iconLink = chrome.extension.getURL("img/icon.png");
+        var htmlToInject = `
+<span class='toxicsense toxicsense-topic'>
+    <a target='_blank' href='${url}' title='ToxicSense Score. Click here to learn more.'>
+        <span>
+            <img src='${iconLink}' title='Analyze this topic with ToxicSense' />
+            <span id='toxicSense-score-topic' class='score'></span>
+        </span>
+    </a>
+</span>`;
+        jQueryElement.append(htmlToInject);
+
+        if (score) {
+            setTopicScore(username, score);
+        }
+    }
+}
+
+function setTopicScore(topic, score) {
+    // Cache for future use.
+    topicScoreMap[topic] = score;
+
+    var newScore = 100 - score;
+    $("#toxicSense-score-topic").html(newScore + "%");
+    if (newScore >= 10) {
+        $("#toxicSense-score-topic").addClass("toxic");
+    }
+}
+
 var userScoreMap = {};
 
-function injectToxicSenseHtml(jQueryElement) {
+function injectToxicSenseHtmlUser(jQueryElement) {
     if (jQueryElement.find("span.toxicsense").length) {
         // Aleady injected.
         return;
@@ -24,9 +76,12 @@ function injectToxicSenseHtml(jQueryElement) {
             // User was already analyzed.
             score = userScoreMap[username];
         } else {
-            $.get(baseUrl + '/analyzeuser', {user:username}).done(function(response) { handleUserData(username, response); });
+            $.get(baseUrl + '/analyzeuser', {user:username}).done(function(response) {
+                score = handleUserData(response);
+                setUserScore(username, score);
+            });
         }
-        var url = baseUrl + "?user=" + username;
+        var url = baseUrl + "?user=" + encodeURIComponent(username);
         var iconLink = chrome.extension.getURL("img/icon.png");
         var htmlToInject = `
 <span class='toxicsense'>
@@ -40,12 +95,12 @@ function injectToxicSenseHtml(jQueryElement) {
         jQueryElement.append(htmlToInject);
 
         if (score) {
-            setScore(username, score);
+            setUserScore(username, score);
         }
     }
 }
 
-function handleUserData(username, data) {
+function handleUserData(data) {
     var dataset = data.map(function(obj){
         var rObj = {
           'date': obj.timestamp,
@@ -62,16 +117,17 @@ function handleUserData(username, data) {
     var totalTweets = dataset.length;
     var toxicThreshold = 0.6;
     var toxicTweets = dataset.filter(x => x.toxicity > toxicThreshold).length;
-    var score = Math.round(100 * (totalTweets - toxicTweets) / totalTweets);
-    setScore(username, score);
+    var score = 100 - Math.round(100 * (totalTweets - toxicTweets) / totalTweets);
 
-    // Cache for future use.
-    userScoreMap[username] = score;
+    return score;
 }
 
-function setScore(username, score) {
-    $("#toxicSense-score-" + username).html(score);
-    if (score < 70) {
+function setUserScore(username, score) {
+    // Cache for future use.
+    userScoreMap[username] = score;
+
+    $("#toxicSense-score-" + username).html(score + "%");
+    if (score >= 10) {
         $("#toxicSense-score-" + username).addClass("toxic");
     }
 }
