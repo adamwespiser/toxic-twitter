@@ -35,6 +35,8 @@ def analyze_tweets(request):
 
 def analyze_user_tweets(request):
     user = request.GET.get('user')
+    user_clean = re.sub("[^A-Za-z_]","",user)
+    user_max_len = user_clean if len(x) < 15 else x[0:15]
     tweets = data_fetch_public.get_tweets_of_user(
         user, 100, data_fetch_constants.DATA_SOURCE_TWEEPY
     )

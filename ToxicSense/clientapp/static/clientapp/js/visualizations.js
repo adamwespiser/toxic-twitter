@@ -7,14 +7,12 @@ function visualizeUserTweets(data) {
 }
 
 function getToxicSenseScore(percent){
-  if(percent > 99){
-    return "green";
+  if(percent > 10){
+    return "red";
   }
-  if (percent > 95){
-    return "yellow";
-  }
-  return "red";
+  return "green";
 }
+
 function colorTweetByToxicity(toxicity){
   if(toxicity > 0.6){
     return "red";
@@ -46,7 +44,7 @@ function visualizeToxicSenseScore(data) {
     num_tweets = dataset.length
     tox_tweets = 0.6
     num_toxic = dataset.filter(x => x.toxicity > tox_tweets).length;
-    percent_score = Math.round(100 * (num_tweets - num_toxic) / num_tweets);
+    percent_score = 100 - Math.round(100 * (num_tweets - num_toxic) / num_tweets);
 
     // set svg size to meet contraints of rendered DOM
     svgHeight = 90
@@ -97,8 +95,8 @@ function visualizeToxicSenseScore(data) {
       .style("text-anchor", "middle")
       .style("font-weight", "bold")
       .attr("font-family", "sans-serif")
-      .style("font-size", "36px")
-      .text(percent_score)
+      .style("font-size", "28px")
+      .text(percent_score + "%" )
       .on("mouseover", mouseover)
       .on("mouseout", mouseout);
 
@@ -225,7 +223,7 @@ function visualizeToxicityVsTime(data) {
       .attr("y",height + 35)
       .attr("font-family", "sans-serif")
       .style("font-weight", "normal")
-      .text("Benign");
+      .text("Non-Toxic");
 
     // Make the X Axis Label
     svg.append("text")
@@ -248,7 +246,7 @@ function visualizeToxicityVsTime(data) {
 
 
     // Make the legend
-    const legendData = [["Toxic Message", "red", "circle"], ["Non-Toxic message", "black", "circle"]];
+    const legendData = [["Toxic Message", "red", "circle"], ["Non-Toxic message", "green", "circle"]];
 
     var legend = svg.append('g')
         .attr("class", "legend1")
