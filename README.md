@@ -13,3 +13,13 @@ A tool to visualize toxicity in social media.
 6. Go to http://localhost:8000/
 
 Note: If you are on a Mac and you see some weird errors about Objective C, you may need to run `export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES` from your terminal. It has something to do with the twitter scraper not playing well with python3 on MacOS.
+
+# Deployment
+
+First time:
+$ eb init -p python-3.6 toxic-sense-mid --profile=gatech
+$ eb create first-env --profile=gatech
+
+
+For successive deployments, 
+$ eb deploy --profile=gatech
