@@ -16,10 +16,14 @@ Note: If you are on a Mac and you see some weird errors about Objective C, you m
 
 # Deployment
 
+We currently use AWS ElasticBeanstalk for deployment.
+Below is the link to the tutorial that was followed to make the deployment..
+https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-django.html
+
+
 First time:
 $ eb init -p python-3.6 toxic-sense-mid --profile=gatech
 $ eb create first-env --profile=gatech
-
 
 For successive deployments, 
 $ eb deploy --profile=gatech
