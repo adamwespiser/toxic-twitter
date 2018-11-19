@@ -21,3 +21,9 @@ pre {
 .loading-container {
     padding-left: 10px;
 }
+
+.error-container {
+    padding-left: 10px;
+    color: red;
+    font-size: 8px;
+}

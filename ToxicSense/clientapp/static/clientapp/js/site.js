@@ -1,7 +1,14 @@
 $(document).ready(function() {
     hideLoading();
+    hideUserToxSenseBanner();
     hideLoadingUser();
+    hideErrors();
 });
+
+function hideErrors() {
+    $('#erroruser').hide();
+    $('#errortopic').hide();
+}
 
 // Topic analysis
 $('#topicsearch').click(analyze);
@@ -16,6 +23,7 @@ function analyze() {
         return;
     }
 
+    hideErrors();
     showLoading();
     $.get('/analyze', {topic:topic})
      .done(receiveData);
@@ -32,7 +40,10 @@ function showLoading() {
 }
 function receiveData(response) {
     hideLoading();
-    hideUserToxSenseBanner();
+    if (response['error']) {
+        $('#errortopic').show();
+        return;
+    }
     visualizeTopicTweets(response);
 }
 
@@ -49,6 +60,7 @@ function analyzeUser() {
         return;
     }
 
+    hideErrors();
     showLoadingUser();
     $.get('/analyzeuser', {user:user})
      .done(receiveUserData);
@@ -64,16 +76,19 @@ function showLoadingUser() {
     $('#loadinguser').show();
 }
 function showUserToxSenseBanner(){
-    $('#bannerResult').show()
+    $('#bannerResult').show();
 }
 
 function hideUserToxSenseBanner(){
-    $('#bannerResult').hide()
+    $('#bannerResult').hide();
 }
-
 
 function receiveUserData(response) {
     hideLoadingUser();
-    showUserToxSenseBanner()
+    if (response['error']) {
+        $('#erroruser').show();
+        return;
+    }
+    showUserToxSenseBanner();
     visualizeUserTweets(response);
 }
