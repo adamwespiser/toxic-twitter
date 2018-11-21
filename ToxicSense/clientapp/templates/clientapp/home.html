@@ -14,23 +14,35 @@
             <h2>ToxicSense</h2>
             <br/>
             <div class="row">
-                <div class="col-md-6" style="border-right: 1px solid #bbb">
+                <div class="col-md-4" style="border-right: 1px solid #bbb">
                     <div class="form-group">
                         <label class="form-text">Enter a topic</label>
                         <input type="text" maxlength=100 id="topic" class="form-control" placeholder="Election, MeToo etc." />
                     </div>
-                    <button type="submit" id="topicsearch" class="btn btn-primary">Analyze tweets</button>
+                    <button type="submit" id="topicsearch" class="btn btn-primary">Analyze topic</button>
                     <span class="loading-container" id="loading"><img src="{% static 'clientapp/img/loading.gif' %}" alt="Loading..." /></span>
+                    <br/>
                     <span class="error-container" id="errortopic">An error has occured. Please check your input and try again.</span>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4" style="border-right: 1px solid #bbb">
                     <div class="form-group">
                         <label class="form-text">Enter a username</label>
                         <input type="text" maxlength=100 id="user" class="form-control" placeholder="realDonaldTrump etc." />
                     </div>
                     <button type="submit" id="usersearch" class="btn btn-primary">Analyze user</button>
                     <span class="loading-container" id="loadinguser"><img src="{% static 'clientapp/img/loading.gif' %}" alt="Loading..." /></span>
+                    <br/>
                     <span class="error-container" id="erroruser">An error has occured. Please check your input and try again.</span>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="form-text">Enter a tweet url</label>
+                        <input type="text" maxlength=100 id="tweeturl" class="form-control" placeholder="https://twitter.com/username/status/1064734907041994497" />
+                    </div>
+                    <button type="submit" id="tweetsearch" class="btn btn-primary">Analyze tweet</button>
+                    <span class="loading-container" id="loadingtweet"><img src="{% static 'clientapp/img/loading.gif' %}" alt="Loading..." /></span>
+                    <br/>
+                    <span class="error-container" id="errortweet">An error has occured. Please check your input and try again.</span>
                 </div>
             </div>
             <hr />

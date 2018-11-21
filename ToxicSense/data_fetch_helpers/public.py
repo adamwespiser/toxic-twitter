@@ -34,7 +34,22 @@ def get_tweets_from_search(search_term, limit=constants.DEFAULT_SEARCH_LIMIT, da
         result = api.get_tweets_from_search(search_term, limit=limit)
         end = time.time()
         logger.info('Took ' + str(end - start) + ' seconds')
-        return result
+    except:
+        logger.exception(sys.exc_info())
+        error = True
+    return result, error
+
+
+def get_replies_of_tweet(tweet_id, username, limit=constants.DEFAULT_TWEET_REPLY_LIMIT, data_source=constants.DATA_SOURCE_TWITTER_SCRAPER):
+    result = []
+    error = False
+    try:
+        logger.info('Replies for tweet: ' + tweet_id + ' from user ' + username + ' using ' + data_source)
+        start = time.time()
+        api = _get_api(data_source)
+        result = api.get_replies_of_tweet(tweet_id, username, limit=limit)
+        end = time.time()
+        logger.info('Took ' + str(end - start) + ' seconds')
     except:
         logger.exception(sys.exc_info())
         error = True
