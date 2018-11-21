@@ -2,12 +2,14 @@ $(document).ready(function() {
     hideLoading();
     hideUserToxSenseBanner();
     hideLoadingUser();
+    hideLoadingTweet();
     hideErrors();
 });
 
 function hideErrors() {
     $('#erroruser').hide();
     $('#errortopic').hide();
+    $('#errortweet').hide();
 }
 
 // Topic analysis
@@ -31,11 +33,13 @@ function analyze() {
 function hideLoading() {
     $('#topicsearch').removeAttr("disabled");
     $('#usersearch').removeAttr("disabled");
+    $('#tweetsearch').removeAttr("disabled");
     $('#loading').hide();
 }
 function showLoading() {
     $('#topicsearch').attr("disabled", "disabled");
     $('#usersearch').attr("disabled", "disabled");
+    $('#tweetsearch').attr("disabled", "disabled");
     $('#loading').show();
 }
 function receiveData(response) {
@@ -68,11 +72,13 @@ function analyzeUser() {
 function hideLoadingUser() {
     $('#topicsearch').removeAttr("disabled");
     $('#usersearch').removeAttr("disabled");
+    $('#tweetsearch').removeAttr("disabled");
     $('#loadinguser').hide();
 }
 function showLoadingUser() {
     $('#topicsearch').attr("disabled", "disabled");
     $('#usersearch').attr("disabled", "disabled");
+    $('#tweetsearch').attr("disabled", "disabled");
     $('#loadinguser').show();
 }
 function showUserToxSenseBanner(){
@@ -91,4 +97,43 @@ function receiveUserData(response) {
     }
     showUserToxSenseBanner();
     visualizeUserTweets(response);
+}
+
+// Tweet analysis
+$('#tweetsearch').click(analyzeTweet);
+$('#tweeturl').on('keypress', function(e) {
+    if (e.keyCode == 13) {
+        analyzeTweet();
+    }
+});
+function analyzeTweet() {
+    var tweetUrl = $('#tweeturl').val();
+    if (!tweetUrl.trim() || tweetUrl.length < 2) {
+        return;
+    }
+
+    hideErrors();
+    showLoadingTweet();
+    $.get('/analyzetweet', {tweet_url:tweetUrl})
+     .done(receiveTweetData);
+}
+function hideLoadingTweet() {
+    $('#topicsearch').removeAttr("disabled");
+    $('#usersearch').removeAttr("disabled");
+    $('#tweetsearch').removeAttr("disabled");
+    $('#loadingtweet').hide();
+}
+function showLoadingTweet() {
+    $('#topicsearch').attr("disabled", "disabled");
+    $('#usersearch').attr("disabled", "disabled");
+    $('#tweetsearch').attr("disabled", "disabled");
+    $('#loadingtweet').show();
+}
+function receiveTweetData(response) {
+    hideLoadingTweet();
+    if (response['error']) {
+        $('#errortweet').show();
+        return;
+    }
+    visualizeTweetReplies(response);
 }

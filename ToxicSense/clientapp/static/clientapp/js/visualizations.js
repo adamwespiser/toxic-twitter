@@ -1,9 +1,13 @@
 function visualizeTopicTweets(data) {
-    visualizeToxicityVsTime(data);
+  visualizeToxicityVsTime(data);
 }
 function visualizeUserTweets(data) {
-    visualizeToxicityVsTime(data);
-    visualizeToxicSenseScore(data);
+  visualizeToxicityVsTime(data);
+  visualizeToxicSenseScore(data);
+}
+
+function visualizeTweetReplies(data) {
+  console.log(data);
 }
 
 function getToxicSenseScore(percent){

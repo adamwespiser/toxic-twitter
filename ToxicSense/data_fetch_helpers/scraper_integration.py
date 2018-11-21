@@ -23,5 +23,8 @@ class ScraperIntegration(ApiIntegration):
         tweets.reverse()
         return tweet.Tweet.create_from_scraper_response(tweets)
 
+    def get_replies_of_tweet(self, tweet_id, username, limit):
+        raise NotImplementedError
+
 
 api_integration = ScraperIntegration()
