@@ -18,11 +18,11 @@ logger = logging.getLogger(__name__)
 
 # set tensorflow to run on only the CPU
 # https://stackoverflow.com/questions/37660312/how-to-run-tensorflow-on-cpu
-config = tf.ConfigProto(
-    device_count = {'GPU': 0}
-)
-config.gpu_options.allow_growth = True
-backend.set_session(tf.Session(config=config))
+# config = tf.ConfigProto(
+#     device_count = {'GPU': 1}
+# )
+# config.gpu_options.allow_growth = True
+# backend.set_session(tf.Session(config=config))
 logger.info("Set Tensorflow backend")
 
 # Set our model resources, and character -> int map
