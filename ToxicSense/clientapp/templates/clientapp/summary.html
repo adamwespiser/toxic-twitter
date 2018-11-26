@@ -112,6 +112,7 @@
             </div>
           </div>
         </section>
+        {% if toxic_tweets %}
         <section class="section">
           <div class="columns">
             <div class="column is-8">
@@ -142,6 +143,7 @@
               </div>
             </div>
             <div class="column">
+              {% if top_hashtags %}
               <div class="tile is-parent">
                 <article class="tile is-child box">
                     <!-- Put any content you want -->
@@ -151,6 +153,8 @@
                   <br/> {% endfor %}
                 </article>
               </div>
+              {% endif %}
+              {% if top_users %}
               <div class="tile is-parent">
                 <article class="tile is-child box">
                   <h1 class="title">Top Toxic Users:</h3>
@@ -159,6 +163,8 @@
                   <br/> {% endfor %}
                 </article>
               </div>
+              {% endif %}
+              {% if top_mentioned_users %}
               <div class="tile is-parent">
                 <article class="tile is-child box">
                   <h1 class="title">User mentions in toxic tweets:</h3>
@@ -167,9 +173,11 @@
                   <br/> {% endfor %}
                 </article>
               </div>
+              {% endif %}
             </div>
           </div>
         </section>
+        {% endif %}
         <section class="dag-container">
           <div id="dag-load-informer" class="hero-body">
             <div class="container">
