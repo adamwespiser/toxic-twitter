@@ -47,13 +47,19 @@ class Tweet:
             tweet.user = response.user.screen_name
             tweet.timestamp = response.created_at.strftime(OUR_DATETIME_FORMAT)
             tweet.text = response.text
+            tweet.hashtags = response.entities['hashtags']
+            tweet.user_mentions = response.entities['user_mentions']
             tweets.append(tweet)
         return tweets
 
     def to_dict(self):
-        return {
+        filled_data = {
             'user': self.user,
             'timestamp': self.timestamp,
             'text': html.escape(self.text),
             'toxicity': toxicityanalyzer.get_toxicity(self.text)
         }
+        for key, value in self.__dict__.items():
+            if key not in filled_data:
+                filled_data[key] = value
+        return filled_data

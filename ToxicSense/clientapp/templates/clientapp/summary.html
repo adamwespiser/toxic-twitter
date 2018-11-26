@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      {% load static %}
+      {% load humanize %}
+      <meta charset="utf-8" />
+      <link rel="icon" href="{% static 'clientapp/img/favicon.ico' %}">
+      <title>ToxicSense</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.css">
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <style>
+        .bd-tw {
+          background-color: #fafafa;
+          border-radius: 6px;
+          color: #697882;
+          flex-shrink: 0;
+          font-family: Helvetica,Roboto,"Segoe UI",Calibri,sans-serif;
+          font-size: 16px;
+          padding: 20px;
+          margin-bottom: 8px;
+        }
+        .search-area {
+          background-color: #fafafa;
+        }
+        .user-safe {
+          color: green;
+        }
+        .user-unsafe {
+          color: red;
+        }
+        #chartContainer {
+          width: 300px;
+          height: 200px;
+          margin-top: 16px;
+        }
+      </style>
+    </head>
+    <body>
+        <section class="hero is-primary">
+          <div class="hero-body">
+            <div class="container">
+              <h1 class="title">
+                <a href="/summary">ToxicSense</a>
+              </h1>
+              <h2 class="subtitle">
+                A tool to analyze toxicity of a user, a topic or a conversation.
+              </h2>
+            </div>
+          </div>
+        </section>
+        <section class="section search-area">
+          <div class="columns">
+            <div class="column" style="border-right: 1px solid #ddd">
+              <form method="GET">
+                <div class="control field">
+                  <input name="topic" class="input" type="text" placeholder="metoo">
+                </div>
+                <div class="control field">
+                  <button class="button is-primary">Analyze Topic</button>
+                </div>
+              </form>
+            </div>
+            <div class="column" style="border-right: 1px solid #ddd">
+              <form method="GET">
+                <div class="control field">
+                  <input name="user" class="input" type="text" placeholder="realDonaldTrump">
+                </div>
+                <div class="control field">
+                  <button class="button is-primary">Analyze User</button>
+                </div>
+              </form>
+            </div>
+            <div class="column">
+              <form method="GET">
+                <div class="control field">
+                  <input name="tweet_url" class="input" type="text" placeholder="https://twitter.com/healthifyme/status/1016639974920163328">
+                </div>
+                <div class="control field">
+                  <button class="button is-primary">Analyze Conversation</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+        {% if result %}
+        <section class="hero is-light">
+          <div class="hero-body" style="padding: 1.5rem 1.5rem;">
+            <div class="container">
+              <p class="title">
+                 {{ about }}
+              </p>
+            </div>
+          </div>
+        </section>
+        <section class="section">
+          <div class="columns">
+            <div class="column is-4">
+              <h2 class="title is-4 {% if safe_score > 90 %}user-safe{% else %}user-unsafe{% endif %}">
+                ToxicSense SafeScore: {{ safe_score }}
+              </h2>
+              <strong>Toxic Tweets:</strong>
+              {{ toxicity_percentage|floatformat:2|intcomma }}% ({{ toxic_tweet_count }}/{{ total_tweets }}) {% if analysis_type != 1 %}
+              <br/>
+              <strong>Toxic Users:</strong>
+              {{ user_toxicity_percentage|floatformat:2|intcomma }}% ({{ toxic_user_count }}/{{ total_users }}) {% endif %}
+              <div id="chartContainer"></div>
+              <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+            </div>
+            <div class="column">
+              <h1 class="title is-4">Toxicity over time</h2>
+              <div id="ToxicityGraph"></div>
+            </div>
+          </div>
+        </section>
+        <section class="section">
+          <div class="columns">
+            <div class="column is-8">
+              <div class="tile is-parent">
+                <section class="is-child box" style="max-height: 1000px; overflow: scroll; width: 100%;">
+                  <h1 class="title">Toxic tweets:</h1>
+                  <h2 class="subtitle">
+                    Shows <strong>toxic</strong> tweets for this search term.
+                  </h2>
+                  {% for tweet in toxic_tweets %}
+                  <article class="bd-tw bd-is-grey bd-has-drawing">
+                    <header class="bd-tw-header">
+                      <a class="bd-tw-author" target="_blank" href="/summary?user={{ tweet.user }}">
+                        <div class="bd-tw-name">
+                            <span class="bd-tw-username">@{{ tweet.user }} ({{ tweet.toxicity }})</span>
+                        </div>
+                      </a>
+                    </header>
+                    <div class="bd-tw-content">
+                      {{ tweet.text }}
+                    </div>
+                    <p class="bd-tw-date">
+                      {{ tweet.timestamp }}
+                    </p>
+                  </article>
+                  {% endfor %}
+                </section>
+              </div>
+            </div>
+            <div class="column">
+              <div class="tile is-parent">
+                <article class="tile is-child box">
+                    <!-- Put any content you want -->
+                  <h1 class="title">Top toxic hashtags:</h3>
+                  {% for k, v in top_hashtags.items %}
+                  <a target="_blank" href="/summary?topic={{k}}">#{{ k }}</a>
+                  <br/> {% endfor %}
+                </article>
+              </div>
+              <div class="tile is-parent">
+                <article class="tile is-child box">
+                  <h1 class="title">Top Toxic Users:</h3>
+                  {% for k, v in top_users.items %}
+                  <a target="_blank" href="/summary?user={{k}}">@{{ k }}</a>
+                  <br/> {% endfor %}
+                </article>
+              </div>
+              <div class="tile is-parent">
+                <article class="tile is-child box">
+                  <h1 class="title">User mentions in toxic tweets:</h3>
+                  {% for k, v in top_mentioned_users.items %}
+                  <a target="_blank" href="/summary?user={{k}}">@{{ k }}</a>
+                  <br/> {% endfor %}
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="dag-container">
+          <div id="dag-load-informer" class="hero-body">
+            <div class="container">
+              <h2 class="subtitle">
+                Loading graph... Please Wait...
+              </h2>
+            </div>
+          </div>
+          <div id="GraphContainer" width="100%"></div>
+        </section>
+        {% else %}
+        <section class="section">
+          Analyze tweets and stay safe online!
+        </section>
+        {% endif %}
+        <footer class="footer">
+          <div class="content has-text-centered">
+            <p>
+              <strong>ToxicSense</strong> for
+              <a href="https://docs.google.com/document/d/e/2PACX-1vRj6A3u1okyJEClnAwUU_9zlPNCJsKKlrzLp0eOnadtwnWRy47qSehKcFFn1rhYzpu5RNQQe3AkI-1J/pub">DVA Final Project.
+            </p>
+          </div>
+        </footer>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+        <script type="text/javascript" src="{% static 'clientapp/js/common_visualizations.js' %}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
+        <link rel="stylesheet" href="{% static 'clientapp/css/graph.css' %}">
+        <script type="text/javascript" src="{% static 'clientapp/js/graph.js' %}"></script>
+        <script>
+          let results = {{ result | safe }};
+          if (results.length > 0) {
+            visualizeToxicityVsTime(results, "#ToxicityGraph");
+
+            let getGraphUrl = "{% url "get_graph" %}" + window.location.search;
+            d3.json(getGraphUrl, function (data) {
+              drawGraph(data, "#GraphContainer");
+              $("#dag-load-informer").hide();
+            });
+          }
+          {% if toxicity_percentage %}
+          window.onload = function () {
+            var chart = new CanvasJS.Chart("chartContainer", {
+              data: [{
+                type: "pie",
+                yValueFormatString: "##0.00\"%\"",
+                indexLabel: "{label} {y}",
+                dataPoints: [
+                  { y: {{ non_toxicity_percentage }}, label: "Non-Toxic" },
+                  { y: {{ toxicity_percentage }}, label: "Toxic" },
+                ]
+              }]
+            });
+            chart.render();
+          }
+          {% endif %}
+        </script>
+    </body>
+</html>

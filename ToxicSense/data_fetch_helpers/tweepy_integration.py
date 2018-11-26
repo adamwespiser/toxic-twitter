@@ -24,7 +24,6 @@ class TweepyIntegration(ApiIntegration):
         return tweet.Tweet.create_from_tweepy_response(tweets)
     
     def get_tweets_from_search(self, search_term, limit):
-        
         tweets = tweepy.Cursor(self.api.search, q=search_term, lang='en').items(limit)
         return tweet.Tweet.create_from_tweepy_response(tweets)
 

@@ -1,0 +1,70 @@
+path.link {
+    fill: none;
+    stroke: #666;
+    stroke-width: 1.5px;
+}
+
+.dag-circle {
+    fill: #ccc;
+    stroke: #fff;
+    stroke: black;
+    stroke-width: 1.5px;
+}
+
+.dag-text {
+    fill: #000;
+    font: sans-serif;
+}
+
+.node-user {
+    fill: #ece7f2;
+}
+
+.node-user-fixed {
+    fill: #a6bddb;
+}
+
+.node-mention-user {
+    fill: #edf8b1;
+}
+
+.node-mention-user-fixed {
+    fill: #7fcdbb;
+}
+
+.node-hashtag {
+    fill: #fee8c8;
+}
+
+.node-hashtag-fixed {
+    fill: #fdbb84;
+}
+
+.d3-tip {
+    line-height: 1;
+    font-weight: bold;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+    box-sizing: border-box;
+    display: inline;
+    font-size: 10px;
+    width: 100%;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.8);
+    content: "\25BC";
+    position: absolute;
+    text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+    margin: -1px 0 0 0;
+    top: 100%;
+    left: 0;
+}

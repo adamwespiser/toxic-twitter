@@ -4,10 +4,9 @@ from ToxicSense.settings import *
 
 
 ALLOWED_HOSTS = [
-    'django-toxic-sense-dev.us-east-1.elasticbeanstalk.com',
-    'first-env.7ys2prfhhm.us-east-1.elasticbeanstalk.com',
     'www.toxicsense.com',
-    'toxicsense.com'
+    'toxicsense.com',
+    'first-env.jchmcupa3h.us-east-1.elasticbeanstalk.com',
 ]
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))

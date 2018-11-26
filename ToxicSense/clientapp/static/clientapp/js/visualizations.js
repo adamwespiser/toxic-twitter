@@ -1,6 +1,7 @@
 function visualizeTopicTweets(data) {
   visualizeToxicityVsTime(data);
 }
+
 function visualizeUserTweets(data) {
   visualizeToxicityVsTime(data);
   visualizeToxicSenseScore(data);
@@ -112,7 +113,6 @@ function visualizeToxicSenseScore(data) {
       .attr("font-family", "sans-serif")
       .style("font-size", "36px")
       .text("ToxicSense Score");
-
 }
 
 function visualizeToxicityVsTime(data) {
@@ -289,8 +289,6 @@ function visualizeToxicityVsTime(data) {
       .text(function (d) {
           return d[0];
       });
-
-
 
     // put a rect around the legend
     // TODO figure out a way to bind this to legendRectE
