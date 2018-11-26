@@ -189,7 +189,13 @@
               </h2>
             </div>
           </div>
-          <div id="GraphContainer" width="100%"></div>
+          <div id="GraphHolder" width="100%" style="display: none;">
+            <section class="section">
+              <h1 class="title">Connections</h1>
+              <h1 class="subtitle">Explore connections between users, topics and mentions</h1>
+            </section>
+            <div id="GraphContainer" width="100%"></div>
+          </div>
         </section>
         {% else %}
         <section class="section">
@@ -215,7 +221,10 @@
 
             let getGraphUrl = "{% url "get_graph" %}" + window.location.search;
             d3.json(getGraphUrl, function (data) {
-              drawGraph(data, "#GraphContainer");
+              if (data.length > 2) {
+                $("#GraphHolder").show();
+                drawGraph(data, "#GraphContainer");
+              } 
               $("#dag-load-informer").hide();
             });
             window.onload = function () {
