@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8000"; // In production this should be http://toxicsense.com
+const BASE_URL = "http://www.toxicsense.com"; // In production this should be http://toxicsense.com
 const TIMEOUT = 2000;
 
 var topicScoreMap = {};

@@ -1,6 +1,6 @@
 {
     "name": "ToxicSense",
-    "version": "1.0",
+    "version": "0.0.0.1",
     "description": "Analyze the toxicity of comments in social media.",
     "manifest_version": 2,
     "permissions": ["activeTab", "http://www.toxicsense.com/*", "http://127.0.0.1:8000/*", "http://localhost:8000/*"],
