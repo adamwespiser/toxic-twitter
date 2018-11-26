@@ -2,6 +2,7 @@ import datetime as dt
 import logging
 import random
 import re
+import sys
 import time
 from operator import itemgetter
 from collections import OrderedDict 
@@ -10,13 +11,16 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django.views.decorators.csrf import csrf_exempt
 
 from clientapp import constants
 from clientapp import summarizer
 from clientapp import generate_graph
 from clientapp import utils
+from clientapp.tasks import update_database
 from data_fetch_helpers import constants as data_fetch_constants
 from data_fetch_helpers import public as data_fetch_public
+from toxicityanalyzer import toxicityanalyzer
 
 
 logger = logging.getLogger('toxicsense.clientapp.views')
@@ -51,6 +55,7 @@ def analyze_topic(request):
     result = [tweet.to_dict() for tweet in tweets]
     end = time.time()
     logger.info('Took ' + str(end - start) + ' seconds')
+    update_database.delay(search_term, result)
     return JsonResponse(result, safe=False)
 
 
@@ -161,12 +166,17 @@ def summary(request):
         analysis_type = TYPE_USER
     if error:
         return render(request, 'clientapp/error.html', {})
-    return _render_results_with_summary(request, about, analysis_type, tweets)
+    return _render_results_with_summary(request, about, analysis_type, search_term, tweets)
 
 
-def _render_results_with_summary(request, about, analysis_type, tweets):
+def _render_results_with_summary(request, about, analysis_type, search_term, tweets):
     summary = summarizer.get_results_summary(tweets)
     result = [tweet.to_dict() for tweet in tweets]
+    if analysis_type == TYPE_TOPIC:
+        try:
+            update_database.delay(search_term, result)
+        except:
+            logger.exception(sys.exc_info())
     context = {
         'result': result,
         'about': about,
@@ -180,3 +190,12 @@ def _render_results_with_summary(request, about, analysis_type, tweets):
         'clientapp/summary.html',
         context
     )
+
+
+@csrf_exempt
+def analyze_toxicity(request):
+    text = request.POST.get('text')
+    result = {
+        'score': toxicityanalyzer.get_toxicity(text)
+    }
+    return JsonResponse(result, safe=False)

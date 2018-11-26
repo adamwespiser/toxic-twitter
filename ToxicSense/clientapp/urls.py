@@ -10,6 +10,7 @@ urlpatterns = [
     path('analyze', views.analyze_topic, name='analyze_topic'),
     path('analyzeuser', views.analyze_user, name='analyze_user'),
     path('analyzetweet', views.analyze_tweet, name='analyze_tweet'),
+    path("analyzetoxicity", views.analyze_toxicity, name="analyze_toxicity"),
     path('summary', views.summary, name='all_summary'),
     path('get_graph', views.get_graph, name='get_graph'),
     path('show_graph', TemplateView.as_view(template_name='clientapp/show_graph.html'))

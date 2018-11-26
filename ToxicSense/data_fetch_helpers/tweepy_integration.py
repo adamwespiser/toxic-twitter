@@ -42,5 +42,9 @@ class TweepyIntegration(ApiIntegration):
             if reply.in_reply_to_status_id in (None, status.id):
                 yield reply
 
+    def get_top_trends(self, woeid):
+        trends = self.api.trends_place(woeid)
+        return trends[0]['trends']
+
 
 api_integration = TweepyIntegration()

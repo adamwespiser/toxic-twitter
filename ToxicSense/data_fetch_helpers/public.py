@@ -56,6 +56,22 @@ def get_replies_of_tweet(tweet_id, username, limit=constants.DEFAULT_TWEET_REPLY
     return result, error
 
 
+def get_top_trends(data_source=constants.DATA_SOURCE_TWEEPY):
+    result = []
+    error = False
+    try:
+        logger.info('Getting top trends for WOEID ' + str(constants.USA_WOEID) + ' using ' + data_source)
+        start = time.time()
+        api = _get_api(data_source)
+        result = api.get_top_trends(constants.USA_WOEID)
+        end = time.time()
+        logger.info('Took ' + str(end - start) + ' seconds')
+    except:
+        logger.exception(sys.exc_info())
+        error = True
+    return result, error
+
+
 def _get_api(data_source):
     if data_source == constants.DATA_SOURCE_TWITTER_API:
         return official_api

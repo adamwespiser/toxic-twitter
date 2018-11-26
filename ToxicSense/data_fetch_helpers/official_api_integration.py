@@ -52,5 +52,8 @@ class OfficialApiIntegration(ApiIntegration):
                     yield reply
                     max_id = reply.id
 
+    def get_top_trends(self, woeid):
+        raise NotImplementedError
+
 
 api_integration = OfficialApiIntegration()

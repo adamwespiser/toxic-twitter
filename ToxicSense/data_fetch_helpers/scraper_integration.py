@@ -26,5 +26,8 @@ class ScraperIntegration(ApiIntegration):
     def get_replies_of_tweet(self, tweet_id, username, limit):
         raise NotImplementedError
 
+    def get_top_trends(self, woeid):
+        raise NotImplementedError
+
 
 api_integration = ScraperIntegration()

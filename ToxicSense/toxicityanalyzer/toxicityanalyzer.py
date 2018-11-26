@@ -93,7 +93,6 @@ def get_toxicity(text):
     tweet_input = format_tweet(text, char_map)
     # bug: https://github.com/keras-team/keras/issues/2397
     with backend.get_session().graph.as_default() as g:
-        model = loaded_model
         pred = loaded_model.predict(tweet_input)
         predlist = pred.tolist()[0]
         # we can use any combination of the 5 different labels

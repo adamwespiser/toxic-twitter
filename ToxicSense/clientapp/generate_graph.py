@@ -10,7 +10,7 @@ TOXICITY_THRESHOLD = constants.TOXICITY_THRESHOLD
 MAX_DEPTH = 2
 
 def get_graph_for_topic(topic, limit=50):
-    print('Loading topic results')
+    # print('Loading topic results')
     tweets, error = data_fetch_public.get_tweets_from_search(
         topic, limit, data_fetch_constants.DATA_SOURCE_TWEEPY
     )
@@ -35,12 +35,12 @@ def get_graph_for_user(user, limit=50):
     if error:
         return []
     summary = summarizer.get_results_summary(tweets, TOXICITY_THRESHOLD)
-    print('Top mentions:', summary.top_mentioned_users)
+    # print('Top mentions:', summary.top_mentioned_users)
     all_tweets = tweets
     all_tweets.extend(
         _get_tweets_from_user_scores(summary.top_mentioned_users.items(), limit)
     )
-    print('Top hashtags:', summary.top_hashtags)
+    # print('Top hashtags:', summary.top_hashtags)
     all_tweets.extend(
         _get_tweets_from_hashtag_scores(summary.top_hashtags.items(), limit)
     )
@@ -50,11 +50,11 @@ def get_graph_for_user(user, limit=50):
 def get_graph_for_tweets(tweets, limit):
     all_tweets = tweets
     summary = summarizer.get_results_summary(tweets, TOXICITY_THRESHOLD)
-    print('Top users:', summary.top_users)
+    # print('Top users:', summary.top_users)
     all_tweets.extend(
         _get_tweets_from_user_scores(summary.top_users.items(), limit)
     )
-    print('Top hashtags:', summary.top_hashtags)
+    # print('Top hashtags:', summary.top_hashtags)
     all_tweets.extend(
         _get_tweets_from_hashtag_scores(summary.top_hashtags.items(), limit)
     )
@@ -62,7 +62,7 @@ def get_graph_for_tweets(tweets, limit):
 
 
 def yield_data_points_from_tweets(tweets):
-    print('Generating points')
+    # print('Generating points')
     for tweet in tweets:
         serialized_tweet = tweet.to_dict()
         if serialized_tweet['toxicity'] <= TOXICITY_THRESHOLD:
@@ -106,7 +106,7 @@ def _get_tweets_from_user_scores(user_scores, limit):
         it_count += 1
         if it_count > MAX_DEPTH:
             continue
-        print('Getting data for: ', username)
+        # print('Getting data for: ', username)
         tweets, error = data_fetch_public.get_tweets_of_user(
             username, limit, data_fetch_constants.DATA_SOURCE_TWEEPY
         )
@@ -121,7 +121,7 @@ def _get_tweets_from_hashtag_scores(hashtag_scores, limit):
         it_count += 1
         if it_count > MAX_DEPTH:
             continue
-        print('Getting hashtag data for: ', hashtag_str)
+        # print('Getting hashtag data for: ', hashtag_str)
         tweets, error = data_fetch_public.get_tweets_from_search(
             hashtag_str, limit, data_fetch_constants.DATA_SOURCE_TWEEPY
         )
