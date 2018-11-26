@@ -76,7 +76,7 @@ def yield_data_points_from_tweets(tweets):
             # User -> hashtag link
             yield {
                 "source": "s: %s" % source_username,
-                "target": '#%s' % hashtag_str,
+                "target": '%s' % hashtag_str,
                 "lt": "create",
                 "tweet": tweet_text
             }
