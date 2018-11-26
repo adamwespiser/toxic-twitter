@@ -1,18 +1,35 @@
-var baseUrl = "http://localhost:8000"; // In production this should be http://toxicsense.com
-
-$(document).ready(function() {
-    $("h2.ProfileHeaderCard-screenname").each(function(index) {
-        injectToxicSenseHtmlUser($(this));
-    });
-    $("span.DashboardProfileCard-screenname").each(function(index) {
-        injectToxicSenseHtmlUser($(this));
-    });
-    $("h1.SearchNavigation-titleText").each(function(index) {
-        injectToxicSenseHtmlTopic($(this));
-    });
-});
+const BASE_URL = "http://localhost:8000"; // In production this should be http://toxicsense.com
+const TIMEOUT = 2000;
 
 var topicScoreMap = {};
+var chosenTopic = null;
+var chosenUser = null;
+
+
+$(document).ready(function () {
+    startPolling();
+});
+
+function refresh() {
+    refreshEverything();
+    setTimeout(refresh, TIMEOUT);
+}
+
+var refreshEverything = function() {
+    $("h2.ProfileHeaderCard-screenname").each(function (index) {
+        injectToxicSenseHtmlUser($(this));
+    });
+    $("span.DashboardProfileCard-screenname").each(function (index) {
+        injectToxicSenseHtmlUser($(this));
+    });
+    $("h1.SearchNavigation-titleText").each(function (index) {
+        injectToxicSenseHtmlTopic($(this));
+    });
+};
+
+var startPolling = function() {
+    setTimeout(refresh, TIMEOUT);   
+};
 
 function injectToxicSenseHtmlTopic(jQueryElement) {
     if (jQueryElement.find("span.toxicsense").length) {
@@ -21,17 +38,21 @@ function injectToxicSenseHtmlTopic(jQueryElement) {
     }
     var score = "";
     var topic = jQueryElement.clone().children().remove().end().text().trim();
+    if (chosenTopic == topic) {
+        return;
+    }
+    chosenTopic = topic;
     if (topic) {
         if (topicScoreMap[topic]) {
             // User was already analyzed.
             score = topicScoreMap[topic];
         } else {
-            $.get(baseUrl + '/analyze', {topic:topic}).done(function(response) {
+            $.get(BASE_URL + '/analyze', {topic:topic}).done(function(response) {
                 score = handleUserData(response);
                 setTopicScore(topic, score);
             });
         }
-        var url = baseUrl + "?topic=" + encodeURIComponent(topic);
+        var url = BASE_URL + "?topic=" + encodeURIComponent(topic);
         var iconLink = chrome.extension.getURL("img/icon.png");
         var htmlToInject = `
 <span class='toxicsense toxicsense-topic'>
@@ -53,7 +74,6 @@ function injectToxicSenseHtmlTopic(jQueryElement) {
 function setTopicScore(topic, score) {
     // Cache for future use.
     topicScoreMap[topic] = score;
-
     var newScore = 100 - score;
     $("#toxicSense-score-topic").html(newScore + "%");
     if (newScore >= 10) {
@@ -72,16 +92,20 @@ function injectToxicSenseHtmlUser(jQueryElement) {
     var usernameLink = jQueryElement.find("a").attr("href");
     if (usernameLink) {
         var username = usernameLink.split("/").pop();
+        if (chosenUser == username) {
+            return;
+        }
+        chosenUser = username;
         if (userScoreMap[username]) {
             // User was already analyzed.
             score = userScoreMap[username];
         } else {
-            $.get(baseUrl + '/analyzeuser', {user:username}).done(function(response) {
+            $.get(BASE_URL + '/analyzeuser', {user:username}).done(function(response) {
                 score = handleUserData(response);
                 setUserScore(username, score);
             });
         }
-        var url = baseUrl + "?user=" + encodeURIComponent(username);
+        var url = BASE_URL + "?user=" + encodeURIComponent(username);
         var iconLink = chrome.extension.getURL("img/icon.png");
         var htmlToInject = `
 <span class='toxicsense'>
