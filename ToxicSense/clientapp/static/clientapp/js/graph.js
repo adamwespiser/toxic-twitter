@@ -33,9 +33,8 @@ var drawGraph = function (links, domElementToAppend) {
     });
     var chart = d3.select(domElementToAppend);
     var targetWidth = chart.node().getBoundingClientRect().width;
-    console.log(targetWidth);
     var width = targetWidth,
-        height = 1000;
+        height = 800;
 
     var force = d3.layout.force()
         .nodes(d3.values(nodes))

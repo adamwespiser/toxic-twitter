@@ -40,7 +40,7 @@
           <div class="hero-body">
             <div class="container">
               <h1 class="title">
-                <a href="/summary">ToxicSense</a>
+                <a href="/">ToxicSense</a>
               </h1>
               <h2 class="subtitle">
                 A tool to analyze toxicity of a user, a topic or a conversation.
@@ -128,7 +128,7 @@
                   {% for tweet in toxic_tweets %}
                   <article class="bd-tw bd-is-grey bd-has-drawing">
                     <header class="bd-tw-header">
-                      <a class="bd-tw-author" target="_blank" href="/summary?user={{ tweet.user }}">
+                      <a class="bd-tw-author" target="_blank" href="/?user={{ tweet.user }}">
                         <div class="bd-tw-name">
                             <span class="bd-tw-username">@{{ tweet.user }} ({{ tweet.toxicity }})</span>
                         </div>
@@ -152,7 +152,7 @@
                     <!-- Put any content you want -->
                   <h1 class="title">Top toxic hashtags:</h3>
                   {% for k, v in top_hashtags.items %}
-                  <a target="_blank" href="/summary?topic={{k}}">#{{ k }}</a>
+                  <a target="_blank" href="/?topic=%23{{k}}">#{{ k }}</a>
                   <br/> {% endfor %}
                 </article>
               </div>
@@ -162,7 +162,7 @@
                 <article class="tile is-child box">
                   <h1 class="title">Top Toxic Users:</h3>
                   {% for k, v in top_users.items %}
-                  <a target="_blank" href="/summary?user={{k}}">@{{ k }}</a>
+                  <a target="_blank" href="/?user={{k}}">@{{ k }}</a>
                   <br/> {% endfor %}
                 </article>
               </div>
@@ -172,7 +172,7 @@
                 <article class="tile is-child box">
                   <h1 class="title">User mentions in toxic tweets:</h3>
                   {% for k, v in top_mentioned_users.items %}
-                  <a target="_blank" href="/summary?user={{k}}">@{{ k }}</a>
+                  <a target="_blank" href="/?user={{k}}">@{{ k }}</a>
                   <br/> {% endfor %}
                 </article>
               </div>
@@ -192,7 +192,26 @@
           <div id="GraphHolder" width="100%" style="display: none;">
             <section class="section">
               <h1 class="title">Connections</h1>
-              <h1 class="subtitle">Explore connections between users, topics and mentions</h1>
+              <h1 class="subtitle">Explore connections between toxic users, topics and mentions</h1>
+              <div class="columns">
+                <div class="column">
+                  <strong>Graph Representation:</strong><br/>
+                  Nodes:<br/>
+                  Nodes are either users or topics and links represents a tweet.<br/>
+                  Nodes that start with `m: ` refers to a user who was mentioned in a tweet.<br/>
+                  Nodes that start with `s: ` refers to a user who created a tweet.<br/>
+                  <br/>
+                  Links:<br/>
+                  Blue links connect a tweet creator and a topic.<br/>
+                  Green links connect a mentioned user with a topic they were mentioned with.<br/>
+                  Red links connect a tweet creator with users they have mentioned.<br/>
+                </div>
+                <div class="column">
+                  <strong>How to use the graph?</strong><br/>
+                  1. Double click on any node to fix the position of the node.<br/>
+                  2. Hover over a node or a link to know the user/topic and the tweet.<br/>
+                </div>
+              </div>
             </section>
             <div id="GraphContainer" width="100%"></div>
           </div>
@@ -227,21 +246,22 @@
               } 
               $("#dag-load-informer").hide();
             });
+            {% if result %}
             window.onload = function () {
-                  var chart = new CanvasJS.Chart("chartContainer", {
-                    data: [{
-                      type: "pie",
-                      yValueFormatString: "##0.00\"%\"",
-                      indexLabel: "{label} {y}",
-                      dataPoints: [
-                        { y: {{ non_toxicity_percentage }}, label: "Non-Toxic" },
-                    { y: {{ toxicity_percentage }}, label: "Toxic"
-              },
-                ]
-              }]
-            });
-            chart.render();
+              var chart = new CanvasJS.Chart("chartContainer", {
+                data: [{
+                  type: "pie",
+                  yValueFormatString: "##0.00\"%\"",
+                  indexLabel: "{label} {y}",
+                  dataPoints: [
+                    { y: {{ non_toxicity_percentage }}, label: "Non-Toxic" },
+                    { y: {{ toxicity_percentage }}, label: "Toxic"},
+                  ]
+                }]
+              });
+              chart.render();
             }
+            {% endif %}
           }
         </script>
     </body>
