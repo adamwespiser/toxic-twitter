@@ -1,8 +1,8 @@
-# ToxicSense
+### ToxicSense
 
 A tool to visualize toxicity in social media.
 
-# Installation
+### Installation
 
 1. Clone this repository.
 2. `cd ToxicSense`
@@ -14,7 +14,7 @@ A tool to visualize toxicity in social media.
 
 Note: If you are on a Mac and you see some weird errors about Objective C, you may need to run `export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES` from your terminal. It has something to do with the twitter scraper not playing well with python3 on MacOS.
 
-# Deployment
+### Deployment
 
 We currently use AWS ElasticBeanstalk for deployment.
 Below is the link to the tutorial that was followed to make the deployment..
@@ -27,3 +27,21 @@ $ eb create first-env --profile=gatech
 
 For successive deployments, 
 $ eb deploy --profile=gatech
+
+## SSH into machine
+
+$ eb ssh 
+
+To get into the folder:
+From https://stackoverflow.com/a/20070161:
+
+SSH login to Linux
+(optional may need to run sudo su - to have proper permissions)
+Run source /opt/python/run/venv/bin/activate
+Run source /opt/python/current/env
+Run cd /opt/python/current/app
+Run python manage.py <commands>
+Or, you can run command as like the below:
+
+Run cd /opt/python/current/app
+Run /opt/python/run/venv/bin/python manage.py <command>
