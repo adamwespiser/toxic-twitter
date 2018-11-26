@@ -29,7 +29,7 @@
           color: red;
         }
         #chartContainer {
-          width: 300px;
+          width: 310px;
           height: 200px;
           margin-top: 16px;
         }
@@ -98,11 +98,14 @@
               <h2 class="title is-4 {% if safe_score > 90 %}user-safe{% else %}user-unsafe{% endif %}">
                 ToxicSense SafeScore: {{ safe_score }}
               </h2>
+              {% if safe_score == 100 %}
+              Awesome! None of the tweets are toxic.<br/><br/>
+              {% endif %}
               <strong>Toxic Tweets:</strong>
-              {{ toxicity_percentage|floatformat:2|intcomma }}% ({{ toxic_tweet_count }}/{{ total_tweets }}) {% if analysis_type != 1 %}
+              {{ toxicity_percentage|floatformat:"0" }}% ({{ toxic_tweet_count }}/{{ total_tweets }}) {% if analysis_type != 1 %}
               <br/>
               <strong>Toxic Users:</strong>
-              {{ user_toxicity_percentage|floatformat:2|intcomma }}% ({{ toxic_user_count }}/{{ total_users }}) {% endif %}
+              {{ user_toxicity_percentage|floatformat:"0" }}% ({{ toxic_user_count }}/{{ total_users }}) {% endif %}
               <div id="chartContainer"></div>
               <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
             </div>
@@ -196,8 +199,7 @@
         <footer class="footer">
           <div class="content has-text-centered">
             <p>
-              <strong>ToxicSense</strong> for
-              <a href="https://docs.google.com/document/d/e/2PACX-1vRj6A3u1okyJEClnAwUU_9zlPNCJsKKlrzLp0eOnadtwnWRy47qSehKcFFn1rhYzpu5RNQQe3AkI-1J/pub">DVA Final Project.
+              <strong>ToxicSense</strong>
             </p>
           </div>
         </footer>
@@ -216,23 +218,22 @@
               drawGraph(data, "#GraphContainer");
               $("#dag-load-informer").hide();
             });
-          }
-          {% if toxicity_percentage %}
-          window.onload = function () {
-            var chart = new CanvasJS.Chart("chartContainer", {
-              data: [{
-                type: "pie",
-                yValueFormatString: "##0.00\"%\"",
-                indexLabel: "{label} {y}",
-                dataPoints: [
-                  { y: {{ non_toxicity_percentage }}, label: "Non-Toxic" },
-                  { y: {{ toxicity_percentage }}, label: "Toxic" },
+            window.onload = function () {
+                  var chart = new CanvasJS.Chart("chartContainer", {
+                    data: [{
+                      type: "pie",
+                      yValueFormatString: "##0.00\"%\"",
+                      indexLabel: "{label} {y}",
+                      dataPoints: [
+                        { y: {{ non_toxicity_percentage }}, label: "Non-Toxic" },
+                    { y: {{ toxicity_percentage }}, label: "Toxic"
+              },
                 ]
               }]
             });
             chart.render();
+            }
           }
-          {% endif %}
         </script>
     </body>
 </html>
