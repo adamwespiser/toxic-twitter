@@ -41,11 +41,11 @@ From https://stackoverflow.com/a/20070161:
 
 SSH login to Linux
 (optional may need to run sudo su - to have proper permissions)
-Run source /opt/python/run/venv/bin/activate
-Run source /opt/python/current/env
-Run cd /opt/python/current/app
-Run python manage.py <commands>
+Run `source /opt/python/run/venv/bin/activate`
+Run `source /opt/python/current/env`
+Run `cd /opt/python/current/app`
+Run `python manage.py <commands>`
 Or, you can run command as like the below:
 
-Run cd /opt/python/current/app
-Run /opt/python/run/venv/bin/python manage.py <command>
+Run `cd /opt/python/current/app`
+Run `/opt/python/run/venv/bin/python manage.py <command>`
