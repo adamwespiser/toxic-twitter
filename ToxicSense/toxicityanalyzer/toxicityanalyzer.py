@@ -32,7 +32,7 @@ path = os.path.dirname(os.path.realpath(__file__)) + "/resources/"
 model_json_file = path + 'model-ascii.json'
 model_h5_file = path + "model-ascii.h5"
 char_to_index = path + "ascii-char-map.json"
-swearWordsDict =pickle.load(open(path + "swearWordDict", 'rb'))
+swearWordsDict =pickle.load(open(path + "swearWordDict.pickle", 'rb'))
 NUM_WORDS = 1
 
 
