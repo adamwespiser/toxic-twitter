@@ -13,4 +13,4 @@ class Topic(models.Model):
     tweet = models.ForeignKey(Tweet, on_delete=models.CASCADE)
 
     class Meta:
-        unique_together = ('topic_term', 'tweet',)
+        unique_together = ('topic_term', 'tweet')

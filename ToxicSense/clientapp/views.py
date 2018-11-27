@@ -55,7 +55,7 @@ def analyze_topic(request):
     result = [tweet.to_dict() for tweet in tweets]
     end = time.time()
     logger.info('Took ' + str(end - start) + ' seconds')
-    update_database.delay(search_term, result)
+    # update_database.delay(search_term, result)
     return JsonResponse(result, safe=False)
 
 
@@ -164,6 +164,12 @@ def summary(request):
         )
         about = 'User: %s' % username
         analysis_type = TYPE_USER
+    else:
+
+        context = {
+            'homeresult': _get_top_trends_data()
+        }
+        return render(request, 'clientapp/summary.html', context)
     if error:
         return render(request, 'clientapp/error.html', {})
     return _render_results_with_summary(request, about, analysis_type, search_term, tweets)
@@ -174,7 +180,8 @@ def _render_results_with_summary(request, about, analysis_type, search_term, twe
     result = [tweet.to_dict() for tweet in tweets]
     if analysis_type == TYPE_TOPIC:
         try:
-            update_database.delay(search_term, result)
+            # update_database.delay(search_term, result)
+            pass
         except:
             logger.exception(sys.exc_info())
     context = {
@@ -190,6 +197,10 @@ def _render_results_with_summary(request, about, analysis_type, search_term, twe
         'clientapp/summary.html',
         context
     )
+
+
+def _get_top_trends_data():
+    return 'Placeholder'
 
 
 @csrf_exempt

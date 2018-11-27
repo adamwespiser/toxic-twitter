@@ -95,10 +95,10 @@
         <section class="section">
           <div class="columns">
             <div class="column is-4">
-              <h2 class="title is-4 {% if safe_score > 90 %}user-safe{% else %}user-unsafe{% endif %}">
-                ToxicSense SafeScore: {{ safe_score }}
+              <h2 class="title is-4 {% if toxicity_percentage <= 10 %}user-safe{% else %}user-unsafe{% endif %}">
+                Toxicity: {{ toxicity_percentage }}%
               </h2>
-              {% if safe_score == 100 %}
+              {% if toxicity_percentage == 0 %}
               Awesome! None of the tweets are toxic.<br/><br/>
               {% endif %}
               <strong>Toxic Tweets:</strong>
@@ -216,18 +216,15 @@
             <div id="GraphContainer" width="100%"></div>
           </div>
         </section>
+        {% elif homeresult %}
+        <section class="section">
+          Top trends appear here.
+        </section>
         {% else %}
         <section class="section">
           Analyze tweets and stay safe online!
         </section>
         {% endif %}
-        <footer class="footer">
-          <div class="content has-text-centered">
-            <p>
-              <strong>ToxicSense</strong>
-            </p>
-          </div>
-        </footer>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
         <script type="text/javascript" src="{% static 'clientapp/js/common_visualizations.js' %}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
