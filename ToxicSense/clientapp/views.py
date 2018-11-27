@@ -200,7 +200,8 @@ def _render_results_with_summary(request, about, analysis_type, search_term, twe
 
 
 def _get_top_trends_data():
-    return 'Placeholder'
+    trends, error = data_fetch_public.get_top_trends(data_fetch_constants.DATA_SOURCE_TWEEPY)
+    return [] if error else trends[:10]
 
 
 @csrf_exempt

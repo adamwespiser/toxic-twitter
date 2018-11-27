@@ -218,7 +218,14 @@
         </section>
         {% elif homeresult %}
         <section class="section">
-          Top trends appear here.
+          <div class="tile is-parent">
+            <article class="tile is-child box">
+              <h1 class="title">Top Trends:</h3>
+              {% for trend in homeresult %}
+              <a target="_blank" href="/?topic={{trend.name}}">{{ trend.name }}</a>
+              <br/> {% endfor %}
+            </article>
+          </div>
         </section>
         {% else %}
         <section class="section">
