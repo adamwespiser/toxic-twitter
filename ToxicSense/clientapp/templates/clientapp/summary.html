@@ -238,10 +238,10 @@
         <link rel="stylesheet" href="{% static 'clientapp/css/graph.css' %}">
         <script type="text/javascript" src="{% static 'clientapp/js/graph.js' %}"></script>
         <script>
+          {% if result %}
           let results = {{ result | safe }};
           if (results.length > 0) {
             visualizeToxicityVsTime(results, "#ToxicityGraph");
-
             let getGraphUrl = "{% url "get_graph" %}" + window.location.search;
             d3.json(getGraphUrl, function (data) {
               if (data.length > 2) {
@@ -250,7 +250,6 @@
               } 
               $("#dag-load-informer").hide();
             });
-            {% if result %}
             window.onload = function () {
               var chart = new CanvasJS.Chart("chartContainer", {
                 data: [{
@@ -265,8 +264,8 @@
               });
               chart.render();
             }
-            {% endif %}
           }
+          {% endif %}
         </script>
     </body>
 </html>
