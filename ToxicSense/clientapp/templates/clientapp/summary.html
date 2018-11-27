@@ -33,7 +33,28 @@
           height: 200px;
           margin-top: 16px;
         }
+        td {
+          padding: 5px;
+        }
       </style>
+      <script>
+        function analyzeTopTrend(topic, id) {
+            $.get('/summary_api', {topic:topic, limit:50}).done(function(response) {
+              toxicity = Math.round(parseFloat(response['toxicity_percentage']));
+              $('#' + id).html(toxicity + '%');
+              $('#' + id).css('font-weight', 700);
+              $('#' + id).css('color', function(){
+                if (toxicity <= 10){
+                    return 'green';
+                }
+                else {
+                    return 'red';
+                }
+            });
+
+            });
+          }
+      </script>
     </head>
     <body>
         <section class="hero is-primary">
@@ -96,7 +117,7 @@
           <div class="columns">
             <div class="column is-4">
               <h2 class="title is-4 {% if toxicity_percentage <= 10 %}user-safe{% else %}user-unsafe{% endif %}">
-                Toxicity: {{ toxicity_percentage }}%
+                Toxicity: {{ toxicity_percentage|floatformat:"0" }}%
               </h2>
               {% if toxicity_percentage == 0 %}
               Awesome! None of the tweets are toxic.<br/><br/>
@@ -221,9 +242,20 @@
           <div class="tile is-parent">
             <article class="tile is-child box">
               <h1 class="title">Top Trends:</h3>
-              {% for trend in homeresult %}
-              <a target="_blank" href="/?topic={{trend.name}}">{{ trend.name }}</a>
-              <br/> {% endfor %}
+              <table>
+                {% for trend in homeresult %}
+                <tr>
+                  <td><a target="_blank" href="/?topic={{trend.name|urlencode}}">{{ trend.name }}</a></td>
+                  <td><span id="trend{{ forloop.counter0 }}"></span></td>
+                  <!-- <br/> -->
+                  <script>
+                    $(document).ready(function() {
+                      analyzeTopTrend('{{ trend.name|urlencode }}', 'trend{{ forloop.counter0 }}');
+                    });
+                  </script>
+                </tr>
+                {% endfor %}
+              </table>
             </article>
           </div>
         </section>
