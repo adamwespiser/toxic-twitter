@@ -12,6 +12,8 @@ from keras.models import model_from_json
 from keras.models import load_model
 from keras import backend
 import tensorflow as tf
+import pickle
+import numpy as np
 
 
 logger = logging.getLogger(__name__)
@@ -30,6 +32,8 @@ path = os.path.dirname(os.path.realpath(__file__)) + "/resources/"
 model_json_file = path + 'model-ascii.json'
 model_h5_file = path + "model-ascii.h5"
 char_to_index = path + "ascii-char-map.json"
+swearWordsDict =pickle.load(open(path + "swearWordDict", 'rb'))
+NUM_WORDS = 1
 
 
 def read_in_keras_model(mjson_file, weights_file, char_file):
@@ -79,8 +83,19 @@ def format_tweet(tweet, char_map):
     array = np.array(tweet_int).astype(int).reshape(1,500)
     return array
 
+def getTextHighlighting(text, baseline = None):
+    ''' Method to return the texts to highlight'''
+    highlight_idx = []
+    words = text.split(' ')
+    nWords = len(words)
+    for k in range(nWords):
+        if words[k] in swearWordsDict:
+            highlight_idx.append(k)
+    return highlight_idx
 
-def get_toxicity(text):
+
+
+def get_toxicity(text, highlight = True):
     # char_map is a set global var
     # if the text is longer than 500, just look at the end
     if len(text) > 500:
@@ -99,4 +114,19 @@ def get_toxicity(text):
         # here, I am just using the max of 'toxic' and 'severe_toxic'
         # we should probably look at some tweets and see what works best...
         output = max(predlist[0],predlist[1])
+        if float(output) > 0.8 and highlight:
+            listOfWords = tweet_input.split(' ')
+            nWords = len(listOfWords)
+            baseline = float(output)
+            words_to_highlight = []
+            for i in range(nWords - (NUM_WORDS -1)):
+                listOfWords = tweet_input.split()
+                curWord = ' '.join(listOfWords[i:i+NUM_WORDS])
+                for k in range(NUM_WORDS):
+                    del listOfWords[i]
+                cur_toxic_tweet = ' '.join(listOfWords)
+                curValue = get_toxicity(cur_toxic_tweet, highlight=False)
+                if curValue < baseline:
+                    words_to_highlight.append(i)
+
         return float(output)
