@@ -165,7 +165,6 @@ def summary(request):
         about = 'User: %s' % username
         analysis_type = TYPE_USER
     else:
-
         context = {
             'homeresult': _get_top_trends_data()
         }
@@ -173,6 +172,12 @@ def summary(request):
     if error:
         return render(request, 'clientapp/error.html', {})
     return _render_results_with_summary(request, about, analysis_type, search_term, tweets)
+
+
+def summary_api(request):
+    tweets = _get_tweets_based_on_request(request)
+    summary = summarizer.get_results_summary(tweets)
+    return JsonResponse(summary._asdict(), safe=False)
 
 
 def _render_results_with_summary(request, about, analysis_type, search_term, tweets):
@@ -211,3 +216,30 @@ def analyze_toxicity(request):
         'score': toxicityanalyzer.get_toxicity(text)
     }
     return JsonResponse(result, safe=False)
+
+
+def _get_tweets_based_on_request(request):
+    search_term = request.GET.get('topic')
+    tweet_url = request.GET.get('tweet_url')
+    username = request.GET.get('user')
+    limit = int(request.GET.get('limit', 50))
+    if search_term:
+        tweets, error = data_fetch_public.get_tweets_from_search(
+            search_term, limit, data_fetch_constants.DATA_SOURCE_TWEEPY
+        )
+        return tweets
+    elif tweet_url:
+        try:
+            user, tweet_id = utils.get_user_tweet_id_from_tweet_url(tweet_url)
+        except:
+            return render(request, 'clientapp/error.html', {})
+        tweets, error = data_fetch_public.get_replies_of_tweet(
+            tweet_id, user, limit, data_fetch_constants.DATA_SOURCE_TWEEPY
+        )
+        return tweets
+    elif username:
+        tweets, error = data_fetch_public.get_tweets_of_user(
+            username, limit, data_fetch_constants.DATA_SOURCE_TWEEPY
+        )
+        return tweets
+    return None
