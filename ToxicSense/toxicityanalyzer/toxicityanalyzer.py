@@ -95,7 +95,7 @@ def getTextHighlighting(text, baseline = None):
 
 
 
-def get_toxicity(text, highlight = True):
+def get_toxicity(text, highlight = False):
     # char_map is a set global var
     # if the text is longer than 500, just look at the end
     if len(text) > 500:
