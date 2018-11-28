@@ -36,22 +36,32 @@
         td {
           padding: 5px;
         }
+        .trend-row {
+          height: 30px;
+        }
+        .trend-filler {
+          width: 0px;
+          height: 30px;
+          background: #00d1b2;
+        }
       </style>
       <script>
-        function analyzeTopTrend(topic, id) {
-            $.get('/summary_api', {topic:topic, limit:50}).done(function(response) {
-              toxicity = Math.round(parseFloat(response['toxicity_percentage']));
-              $('#' + id).html(toxicity + '%');
-              $('#' + id).css('font-weight', 700);
-              $('#' + id).css('color', function(){
+        function analyzeTopTrend(topic, i) {
+            $.get('/summary_api', {topic:topic, limit: 50}).done(function(response) {
+              let toxicity = Math.round(parseFloat(response['toxicity_percentage']));
+              let fillId = '#trend-fill-' + i;
+              let toxicPercentageId = '#trend' + i; 
+              let widthVal = ((toxicity + 1) * 1.6) + "px";
+              $(fillId).css("width", widthVal);
+              $(toxicPercentageId).html(toxicity + '%');
+              $(toxicPercentageId).css('font-weight', 700);
+              $(toxicPercentageId).css('color', function() {
                 if (toxicity <= 10){
                     return 'green';
-                }
-                else {
+                } else {
                     return 'red';
                 }
-            });
-
+              });
             });
           }
       </script>
@@ -247,13 +257,18 @@
               <h1 class="title">Top Trends:</h3>
               <table>
                 {% for trend in homeresult %}
-                <tr>
+                <tr class="trend-row">
                   <td><a target="_blank" href="/?topic={{trend.name|urlencode}}">{{ trend.name }}</a></td>
-                  <td><span id="trend{{ forloop.counter0 }}"></span></td>
+                  <td>
+                    <span id="trend{{ forloop.counter0 }}"></span>
+                  </td>
+                  <td style="width: 100px">
+                    <div class="trend-filler" id="trend-fill-{{ forloop.counter0 }}"></div>
+                  </td>
                   <!-- <br/> -->
                   <script>
                     $(document).ready(function() {
-                      analyzeTopTrend('{{ trend.name|urlencode }}', 'trend{{ forloop.counter0 }}');
+                      analyzeTopTrend('{{ trend.name|urlencode }}', {{ forloop.counter0 }});
                     });
                   </script>
                 </tr>
