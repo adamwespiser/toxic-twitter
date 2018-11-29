@@ -1,4 +1,4 @@
-const BASE_URL = "https://www.toxicsense.com"; // In production this should be http://toxicsense.com
+const BASE_URL = "https://www.toxicsense.com";
 const TIMEOUT = 2000;
 
 var topicScoreMap = {};
@@ -74,9 +74,8 @@ function injectToxicSenseHtmlTopic(jQueryElement) {
 function setTopicScore(topic, score) {
     // Cache for future use.
     topicScoreMap[topic] = score;
-    var newScore = 100 - score;
-    $("#toxicSense-score-topic").html(newScore + "%");
-    if (newScore >= 10) {
+    $("#toxicSense-score-topic").html(score + "%");
+    if (score >= 10) {
         $("#toxicSense-score-topic").addClass("toxic");
     }
 }
