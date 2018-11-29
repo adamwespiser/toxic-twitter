@@ -1,9 +1,9 @@
 {
     "name": "ToxicSense",
-    "version": "0.0.0.1",
+    "version": "0.0.0.2",
     "description": "Analyze the toxicity of comments in social media.",
     "manifest_version": 2,
-    "permissions": ["http://www.toxicsense.com/*", "https://www.toxicsense.com/*"],
+    "permissions": ["https://www.toxicsense.com/*"],
     "browser_action": {
         "default_popup": "popup.html",
         "default_icon": "img/icon.png",
