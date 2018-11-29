@@ -114,7 +114,7 @@ function visualizeToxicityVsTime(data, elementId) {
         .text("Toxic");
 
     svg.append("text")
-        .attr("x", -50)
+        .attr("x", -85)
         .attr("y", height + 35)
         .attr("font-family", "sans-serif")
         .style("font-weight", "normal")

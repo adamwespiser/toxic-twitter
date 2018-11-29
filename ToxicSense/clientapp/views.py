@@ -180,9 +180,21 @@ def summary_api(request):
     return JsonResponse(summary._asdict(), safe=False)
 
 
+@csrf_exempt
+def analyze_toxicity(request):
+    text = request.POST.get('text')
+    result = {
+        'score': toxicityanalyzer.get_toxicity(text)
+    }
+    return JsonResponse(result, safe=False)
+
+
 def _render_results_with_summary(request, about, analysis_type, search_term, tweets):
-    summary = summarizer.get_results_summary(tweets)
-    result = [tweet.to_dict() for tweet in tweets]
+    tweet_dicts = utils.get_tweet_dicts(tweets)
+    summary = summarizer.get_results_summary_from_dicts(tweet_dicts)
+    first_graph_points = [
+        data_point for data_point in generate_graph.yield_data_points_from_tweet_dicts(tweet_dicts)
+    ]
     if analysis_type == TYPE_TOPIC:
         try:
             # update_database.delay(search_term, result)
@@ -190,10 +202,11 @@ def _render_results_with_summary(request, about, analysis_type, search_term, twe
         except:
             logger.exception(sys.exc_info())
     context = {
-        'result': result,
+        'result': tweet_dicts,
         'about': about,
         'analysis_type': analysis_type,
-        'non_toxicity_percentage': 100 - summary.toxicity_percentage if summary else 0
+        'non_toxicity_percentage': 100 - summary.toxicity_percentage if summary else 0,
+        'graph_data_points': first_graph_points
     }
     if summary:
         context.update(summary._asdict())
@@ -207,15 +220,6 @@ def _render_results_with_summary(request, about, analysis_type, search_term, twe
 def _get_top_trends_data():
     trends, error = data_fetch_public.get_top_trends(data_fetch_constants.DATA_SOURCE_TWEEPY)
     return [] if error else trends[:10]
-
-
-@csrf_exempt
-def analyze_toxicity(request):
-    text = request.POST.get('text')
-    result = {
-        'score': toxicityanalyzer.get_toxicity(text)
-    }
-    return JsonResponse(result, safe=False)
 
 
 def _get_tweets_based_on_request(request):

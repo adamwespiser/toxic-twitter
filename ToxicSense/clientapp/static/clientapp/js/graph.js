@@ -34,13 +34,15 @@ var drawGraph = function (links, domElementToAppend) {
     var chart = d3.select(domElementToAppend);
     var targetWidth = chart.node().getBoundingClientRect().width;
     var width = targetWidth,
-        height = 800;
+        height = 700;
 
     var force = d3.layout.force()
         .nodes(d3.values(nodes))
         .links(links)
         .size([width, height])
-        .linkDistance(50)
+        .gravity(0.07)
+        .linkDistance(150)
+        .friction(0.5)
         .charge(-250)
         .on("tick", tick)
         .start();

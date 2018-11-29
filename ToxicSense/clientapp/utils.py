@@ -13,3 +13,7 @@ def get_clean_username(user):
     user_clean = re.sub("[^A-Za-z_]", "", user)
     user_clean = user_clean if len(user_clean) < 15 else user_clean[0:15]
     return user_clean
+
+
+def get_tweet_dicts(tweets):
+    return [tweet.to_dict() for tweet in tweets]

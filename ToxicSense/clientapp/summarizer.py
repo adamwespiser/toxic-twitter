@@ -15,20 +15,16 @@ ResultsSummary = namedtuple(
     ]
 )
 
-
-def get_results_summary(tweets, toxicity_threshold=constants.TOXICITY_THRESHOLD):
-    if not tweets:
-        return None
-    result = [tweet.to_dict() for tweet in tweets]
-    result = sorted(result, key=itemgetter('toxicity')) 
+def get_results_summary_from_dicts(tweet_dicts, toxicity_threshold=constants.TOXICITY_THRESHOLD):
+    tweet_dicts = sorted(tweet_dicts, key=itemgetter('toxicity')) 
     top_toxic_users = {}
     top_toxic_mentioned_users = {}
     top_toxic_hashtags = {}
-    total_tweets = len(result)
+    total_tweets = len(tweet_dicts)
     toxic_tweet_count = 0
     toxic_tweets = []
     non_toxic_tweets = []
-    for item in result:
+    for item in tweet_dicts:
         toxicity = item['toxicity']
         username = item['user']
         if toxicity <= toxicity_threshold:
@@ -49,6 +45,8 @@ def get_results_summary(tweets, toxicity_threshold=constants.TOXICITY_THRESHOLD)
     ordered_top_hashtags = OrderedDict(
         sorted(top_toxic_hashtags.items(), key=lambda x: x[1], reverse=True)[:10]
     )
+    ordered_top_hashtags = _get_100_fixed_values(ordered_top_hashtags)
+    
     toxic_only_users = [
         (username, toxicity)
         for username, toxicity in top_toxic_users.items()
@@ -57,9 +55,13 @@ def get_results_summary(tweets, toxicity_threshold=constants.TOXICITY_THRESHOLD)
     ordered_top_users = OrderedDict(
         sorted(toxic_only_users, key=lambda x: x[1], reverse=True)[:10]
     )
+    ordered_top_users = _get_100_fixed_values(ordered_top_users)
+
     ordered_top_mentioned_users = OrderedDict(
         sorted(top_toxic_mentioned_users.items(), key=lambda x: x[1], reverse=True)[:10]
     )
+    ordered_top_mentioned_users = _get_100_fixed_values(ordered_top_mentioned_users)
+
     toxic_user_count = sum([
         1 if value > 0 else 0
         for value in top_toxic_users.values()
@@ -75,3 +77,21 @@ def get_results_summary(tweets, toxicity_threshold=constants.TOXICITY_THRESHOLD)
         toxic_tweet_count, total_tweets, toxicity_percentage, safe_score,
         toxic_user_count, total_users, user_toxicity_percentage
     )
+
+
+def _get_100_fixed_values(ordered_data):
+    if not ordered_data:
+        return ordered_data
+    max_value = None
+    for k, v in ordered_data.items():
+        if not max_value:
+            max_value = v
+        ordered_data[k] = int((v / float(max_value)) * 100)
+    return ordered_data
+
+
+def get_results_summary(tweets, toxicity_threshold=constants.TOXICITY_THRESHOLD):
+    if not tweets:
+        return None
+    tweet_dicts = [tweet.to_dict() for tweet in tweets]
+    return get_results_summary_from_dicts(tweet_dicts, toxicity_threshold)    

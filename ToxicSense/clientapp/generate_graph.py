@@ -2,6 +2,7 @@ import json
 
 from clientapp import constants
 from clientapp import summarizer
+from clientapp import utils
 from data_fetch_helpers import constants as data_fetch_constants
 from data_fetch_helpers import public as data_fetch_public
 
@@ -47,24 +48,23 @@ def get_graph_for_user(user, limit=50):
     return [data_point for data_point in yield_data_points_from_tweets(all_tweets)]
 
 
-def get_graph_for_tweets(tweets, limit):
+def get_graph_for_tweets(tweets, limit, should_go_deep=True):
     all_tweets = tweets
-    summary = summarizer.get_results_summary(tweets, TOXICITY_THRESHOLD)
-    # print('Top users:', summary.top_users)
-    all_tweets.extend(
-        _get_tweets_from_user_scores(summary.top_users.items(), limit)
-    )
-    # print('Top hashtags:', summary.top_hashtags)
-    all_tweets.extend(
-        _get_tweets_from_hashtag_scores(summary.top_hashtags.items(), limit)
-    )
+    if should_go_deep:
+        summary = summarizer.get_results_summary(tweets, TOXICITY_THRESHOLD)
+        # print('Top users:', summary.top_users)
+        all_tweets.extend(
+            _get_tweets_from_user_scores(summary.top_users.items(), limit)
+        )
+        # print('Top hashtags:', summary.top_hashtags)
+        all_tweets.extend(
+            _get_tweets_from_hashtag_scores(summary.top_hashtags.items(), limit)
+        )
     return [data_point for data_point in yield_data_points_from_tweets(all_tweets)]
 
 
-def yield_data_points_from_tweets(tweets):
-    # print('Generating points')
-    for tweet in tweets:
-        serialized_tweet = tweet.to_dict()
+def yield_data_points_from_tweet_dicts(tweet_dicts):
+    for serialized_tweet in tweet_dicts:
         if serialized_tweet['toxicity'] <= TOXICITY_THRESHOLD:
             continue
         tweet_text = serialized_tweet['text']
@@ -75,28 +75,34 @@ def yield_data_points_from_tweets(tweets):
             hashtag_texts.append(hashtag_str)
             # User -> hashtag link
             yield {
-                "source": "s: %s" % source_username,
-                "target": '%s' % hashtag_str,
-                "lt": "create",
-                "tweet": tweet_text
+                'source': 's: %s' % source_username,
+                'target': '%s' % hashtag_str,
+                'lt': 'create',
+                'tweet': tweet_text
             }
         for tagged_user_info in serialized_tweet.get('user_mentions', []):
             mentioned_username = tagged_user_info['screen_name']
             # User -> mentioned user link
             yield {
-                "source": "s: %s" % source_username,
-                "target": "m: %s" % mentioned_username,
-                "lt": "mention",
-                "tweet": tweet_text
+                'source': 's: %s' % source_username,
+                'target': 'm: %s' % mentioned_username,
+                'lt': 'mention',
+                'tweet': tweet_text
             }
             for hashtag_str in hashtag_texts:
                 # Mentioned user -> hashtag link
                 yield {
-                    "source": "m: %s" % mentioned_username,
-                    "target": hashtag_str,
-                    "lt": "mention_with_hashtag",
-                    "tweet": tweet_text
+                    'source': 'm: %s' % mentioned_username,
+                    'target': hashtag_str,
+                    'lt': 'mention_with_hashtag',
+                    'tweet': tweet_text
                 }
+
+
+def yield_data_points_from_tweets(tweets):
+    # print('Generating points')
+    tweet_dicts = utils.get_tweet_dicts(tweets)
+    yield_data_points_from_tweet_dicts(tweet_dicts)
 
 
 def _get_tweets_from_user_scores(user_scores, limit):

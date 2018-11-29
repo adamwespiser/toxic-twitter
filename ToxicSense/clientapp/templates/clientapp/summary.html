@@ -44,6 +44,16 @@
           height: 30px;
           background: #00d1b2;
         }
+        .top-item-filler {
+          width: 0px;
+          height: 15px;
+          background: #bdbdbd;
+        }
+        .top-item-row td {
+          padding: 1px !important;
+          padding-right: 8px !important;
+          vertical-align: middle !important;
+        }
       </style>
       <script>
         function analyzeTopTrend(topic, i) {
@@ -185,9 +195,18 @@
                 <article class="tile is-child box">
                     <!-- Put any content you want -->
                   <h1 class="title">Top toxic hashtags:</h3>
+                  <table>
                   {% for k, v in top_hashtags.items %}
-                  <a target="_blank" href="/?topic=%23{{k}}">#{{ k }}</a>
-                  <br/> {% endfor %}
+                  <tr class="top-item-row">
+                    <td>
+                      <a target="_blank" href="/?topic=%23{{k}}">#{{ k }}</a>
+                    </td>
+                    <td style="width: 100px; padding-left: 5px !important;">
+                      <div class="top-item-filler" style="width: {{ v }}px;"></div>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                  </table>
                 </article>
               </div>
               {% endif %}
@@ -195,9 +214,18 @@
               <div class="tile is-parent">
                 <article class="tile is-child box">
                   <h1 class="title">Top Toxic Users:</h3>
+                  <table>
                   {% for k, v in top_users.items %}
-                  <a target="_blank" href="/?user={{k}}">@{{ k }}</a>
-                  <br/> {% endfor %}
+                  <tr class="top-item-row">
+                    <td>
+                      <a target="_blank" href="/?user={{k}}">@{{ k }}</a>
+                    </td>
+                    <td style="width: 100px; padding-left: 5px !important;">
+                      <div class="top-item-filler" style="width: {{ v }}px;"></div>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                  </table>
                 </article>
               </div>
               {% endif %}
@@ -205,9 +233,18 @@
               <div class="tile is-parent">
                 <article class="tile is-child box">
                   <h1 class="title">User mentions in toxic tweets:</h3>
+                  <table>
                   {% for k, v in top_mentioned_users.items %}
-                  <a target="_blank" href="/?user={{k}}">@{{ k }}</a>
-                  <br/> {% endfor %}
+                  <tr class="top-item-row">
+                    <td>
+                      <a target="_blank" href="/?user={{k}}">@{{ k }}</a>
+                    </td>
+                    <td style="width: 100px; padding-left: 5px !important;">
+                      <div class="top-item-filler" style="width: {{ v }}px;"></div>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                  </table>
                 </article>
               </div>
               {% endif %}
@@ -224,30 +261,35 @@
             </div>
           </div>
           <div id="GraphHolder" width="100%" style="display: none;">
-            <section class="section">
+            <section class="section" style="padding-top: 0px;">
               <h1 class="title">Connections</h1>
               <h1 class="subtitle">Explore connections between toxic users, topics and mentions</h1>
+            </section>
+            <div id="GraphContainer" width="100%"></div>
+            <section class="section">
               <div class="columns">
                 <div class="column">
-                  <strong>Graph Representation:</strong><br/>
-                  Nodes:<br/>
-                  Nodes are either users or topics and links represents a tweet.<br/>
-                  Nodes that start with `m: ` refers to a user who was mentioned in a tweet.<br/>
-                  Nodes that start with `s: ` refers to a user who created a tweet.<br/>
+                  <strong>Graph Representation:</strong>
+                  <br/> Nodes:
+                  <br/> Nodes are either users or topics.
+                  <br/> Nodes that start with `m: ` refers to a user who was mentioned in a tweet.
+                  <br/> Nodes that start with `s: ` refers to a user who created a tweet.
                   <br/>
-                  Links:<br/>
-                  Blue links connect a tweet creator and a topic.<br/>
-                  Green links connect a mentioned user with a topic they were mentioned with.<br/>
-                  Red links connect a tweet creator with users they have mentioned.<br/>
+                  <br/> Links:
+                  <br/> Links represents a tweet.
+                  <br/> Blue links connect a tweet creator and a topic.
+                  <br/> Green links connect a mentioned user with a topic they were mentioned with.
+                  <br/> Red links connect a tweet creator with users they have mentioned.
+                  <br/>
                 </div>
                 <div class="column">
-                  <strong>How to use the graph?</strong><br/>
-                  1. Double click on any node to fix the position of the node.<br/>
-                  2. Hover over a node or a link to know the user/topic and the tweet.<br/>
+                  <strong>How to use the graph?</strong>
+                  <br/> 1. Click a node a move to better arrange them spatially.
+                  <br/> 2. Hover over a node or a link to know the user/topic and the tweet.
+                  <br/> 3. Double click on any node to fix the position of the node.
                 </div>
               </div>
             </section>
-            <div id="GraphContainer" width="100%"></div>
           </div>
         </section>
         {% elif homeresult %}
@@ -286,20 +328,32 @@
         <script type="text/javascript" src="{% static 'clientapp/js/common_visualizations.js' %}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
         <link rel="stylesheet" href="{% static 'clientapp/css/graph.css' %}">
+        <link rel="stylesheet" href="{% static 'clientapp/css/visualizations.css' %}">
         <script type="text/javascript" src="{% static 'clientapp/js/graph.js' %}"></script>
         <script>
           {% if result %}
-          let results = {{ result | safe }};
-          if (results.length > 0) {
-            visualizeToxicityVsTime(results, "#ToxicityGraph");
+          var drawGraphUsingApi = function() {
             let getGraphUrl = "{% url "get_graph" %}" + window.location.search;
             d3.json(getGraphUrl, function (data) {
-              if (data.length > 2) {
-                $("#GraphHolder").show();
-                drawGraph(data, "#GraphContainer");
-              } 
-              $("#dag-load-informer").hide();
+              drawGraphUsingDataPoints(data);
             });
+          }
+
+          var drawGraphUsingDataPoints = function(data) {
+            if (data.length > 2) {
+              $("#GraphHolder").show();
+              drawGraph(data, "#GraphContainer");
+              $("#dag-load-informer").hide();
+            } else {
+              $("#dag-load-informer").html("Not enough data to plot graph.")  
+            }
+          }
+
+          let results = {{ result | safe }};
+          let graphDataPoints = {{ graph_data_points | safe }};
+          if (results.length > 0) {
+            visualizeToxicityVsTime(results, "#ToxicityGraph");
+            drawGraphUsingDataPoints(graphDataPoints);
             window.onload = function () {
               var chart = new CanvasJS.Chart("chartContainer", {
                 data: [{
