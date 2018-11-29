@@ -7,6 +7,7 @@ import time
 from operator import itemgetter
 from collections import OrderedDict 
 
+from django.conf import settings
 from django.http import HttpResponse
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -55,7 +56,7 @@ def analyze_topic(request):
     result = [tweet.to_dict() for tweet in tweets]
     end = time.time()
     logger.info('Took ' + str(end - start) + ' seconds')
-    # update_database.delay(search_term, result)
+    _update_database(search_term, result)
     return JsonResponse(result, safe=False)
 
 
@@ -197,8 +198,7 @@ def _render_results_with_summary(request, about, analysis_type, search_term, twe
     ]
     if analysis_type == TYPE_TOPIC:
         try:
-            # update_database.delay(search_term, result)
-            pass
+            _update_database(search_term, tweet_dicts)
         except:
             logger.exception(sys.exc_info())
     context = {
@@ -247,3 +247,8 @@ def _get_tweets_based_on_request(request):
         )
         return tweets
     return None
+
+
+def _update_database(search_term, result):
+    if settings.ENABLE_CELERY:
+        update_database.delay(search_term, result)

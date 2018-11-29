@@ -50,8 +50,13 @@ def update_database(search_term, tweets):
 
 def _update_database(search_term, tweets):
     for item in tweets:
-        localized_timestamp = pytz.utc.localize(datetime.strptime(item['timestamp'], data_fetch_constants.OUR_DATETIME_FORMAT))
-        tweet_obj, created = Tweet.objects.get_or_create(tweet_id=item['id'], screen_name=item['user'], text=item['text'], created_at=localized_timestamp, toxicity=item['toxicity'])
+        localized_timestamp = pytz.utc.localize(
+            datetime.strptime(item['timestamp'], data_fetch_constants.OUR_DATETIME_FORMAT)
+        )
+        tweet_obj, created = Tweet.objects.get_or_create(
+            tweet_id=item['id'], screen_name=item['user'], text=item['text'],
+            created_at=localized_timestamp, toxicity=item['toxicity']
+        )
         tweet_obj.save()
         topic_obj, created = Topic.objects.get_or_create(topic_term=search_term, tweet=tweet_obj)
         topic_obj.save()
