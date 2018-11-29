@@ -1,7 +1,7 @@
 To train our char-cnn:
 Note: This step will take you 3-4 hours, depending on your computer, and the notebook was run on a computer with a discrete GPU.
 1) Go to https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/data and download train.csv, put this files in a directory called "kaggle"
-2) Run all the cells in the "train-and-export.ipynb" notebook. You can run this by installing Jyputer, and running the command "$ jupyter notebook" in this directory
+2) Run all the cells in the "build-and-export.ipynb" notebook. You can run this by installing Jyputer, and running the command "$ jupyter notebook" in this directory
 3) "train-and-export.ipynb" will export our model into the directory, "ascii-3-model/"
 
 
