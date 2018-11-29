@@ -25,7 +25,7 @@ Visit http://localhost:8000/
 Quick start does not include background processing.
 To set it up, follow the detailed installation instructions below.
 
-### Installation
+### Full Installation
 
 1. $ cd CODE/ToxicSense
 2. Create a python3 virtual environment and activate it. Follow instructions here https://docs.python.org/3/library/venv.html.
