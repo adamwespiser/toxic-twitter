@@ -53,13 +53,14 @@ def _update_database(search_term, tweets):
         localized_timestamp = pytz.utc.localize(
             datetime.strptime(item['timestamp'], data_fetch_constants.OUR_DATETIME_FORMAT)
         )
-        tweet_obj, created = Tweet.objects.get_or_create(
+        tweet_obj, tweet_created = Tweet.objects.get_or_create(
             tweet_id=item['id'], screen_name=item['user'], text=item['text'],
             created_at=localized_timestamp, toxicity=item['toxicity']
         )
-        tweet_obj.save()
-        topic_obj, created = Topic.objects.get_or_create(topic_term=search_term, tweet=tweet_obj)
-        topic_obj.save()
+        topic_obj, created = Topic.objects.get_or_create(topic_term=search_term)
+        if not tweet_obj.topics.filter(id=topic_obj.id).exists():
+            tweet_obj.topics.add(topic_obj)
+
 
 
 def _get_tweet_dict(tweet):

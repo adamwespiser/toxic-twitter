@@ -8,6 +8,7 @@ from operator import itemgetter
 from collections import OrderedDict 
 
 from django.conf import settings
+from django.db.models import Avg
 from django.http import HttpResponse
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -18,6 +19,7 @@ from clientapp import constants
 from clientapp import summarizer
 from clientapp import generate_graph
 from clientapp import utils
+from clientapp.models import Tweet, Topic
 from clientapp.tasks import update_database
 from data_fetch_helpers import constants as data_fetch_constants
 from data_fetch_helpers import public as data_fetch_public
@@ -167,7 +169,10 @@ def summary(request):
         analysis_type = TYPE_USER
     else:
         context = {
-            'homeresult': _get_top_trends_data()
+            'homeresult': {
+                'top_trends': _get_top_trends_data(),
+                'top_searches': _get_top_searches_data(),
+            }
         }
         return render(request, 'clientapp/summary.html', context)
     if error:
@@ -220,6 +225,14 @@ def _render_results_with_summary(request, about, analysis_type, search_term, twe
 def _get_top_trends_data():
     trends, error = data_fetch_public.get_top_trends(data_fetch_constants.DATA_SOURCE_TWEEPY)
     return [] if error else trends[:10]
+
+
+def _get_top_searches_data():
+    top_searches = {}
+    top_topics = Topic.objects.order_by('-id')[:10]
+    for topic in top_topics:
+        top_searches[topic] = int(topic.tweets.all().aggregate(avg_toxicity=Avg('toxicity'))['avg_toxicity'] * 100)
+    return top_searches
 
 
 def _get_tweets_based_on_request(request):

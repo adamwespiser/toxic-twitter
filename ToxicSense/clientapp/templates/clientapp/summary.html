@@ -57,23 +57,27 @@
       </style>
       <script>
         function analyzeTopTrend(topic, i) {
-            $.get('/summary_api', {topic:topic, limit: 50}).done(function(response) {
-              let toxicity = Math.round(parseFloat(response['toxicity_percentage']));
-              let fillId = '#trend-fill-' + i;
-              let toxicPercentageId = '#trend' + i; 
-              let widthVal = ((toxicity + 1) * 1.6) + "px";
-              $(fillId).css("width", widthVal);
-              $(toxicPercentageId).html(toxicity + '%');
-              $(toxicPercentageId).css('font-weight', 700);
-              $(toxicPercentageId).css('color', function() {
-                if (toxicity <= 10){
-                    return 'green';
-                } else {
-                    return 'red';
-                }
-              });
-            });
-          }
+          $.get('/summary_api', {topic:topic, limit: 50}).done(function(response) {
+            let toxicity = Math.round(parseFloat(response['toxicity_percentage']));
+            let fillId = '#trend-fill-' + i;
+            let toxicPercentageId = '#trend' + i; 
+            showToxicityBar(toxicity, fillId, toxicPercentageId);
+          });
+        }
+
+        function showToxicityBar(toxicity, fillId, toxicPercentageId) {
+          let widthVal = ((toxicity + 1) * 1.6) + "px";
+          $(fillId).css("width", widthVal);
+          $(toxicPercentageId).html(toxicity + '%');
+          $(toxicPercentageId).css('font-weight', 700);
+          $(toxicPercentageId).css('color', function() {
+            if (toxicity <= 10){
+                return 'green';
+            } else {
+                return 'red';
+            }
+          });
+        }
       </script>
     </head>
     <body>
@@ -294,29 +298,61 @@
         </section>
         {% elif homeresult %}
         <section class="section">
-          <div class="tile is-parent">
-            <article class="tile is-child box">
-              <h1 class="title">Top Trends:</h3>
-              <table>
-                {% for trend in homeresult %}
-                <tr class="trend-row">
-                  <td><a target="_blank" href="/?topic={{trend.name|urlencode}}">{{ trend.name }}</a></td>
-                  <td>
-                    <span id="trend{{ forloop.counter0 }}"></span>
-                  </td>
-                  <td style="width: 100px">
-                    <div class="trend-filler" id="trend-fill-{{ forloop.counter0 }}"></div>
-                  </td>
-                  <!-- <br/> -->
-                  <script>
-                    $(document).ready(function() {
-                      analyzeTopTrend('{{ trend.name|urlencode }}', {{ forloop.counter0 }});
-                    });
-                  </script>
-                </tr>
-                {% endfor %}
-              </table>
-            </article>
+          <div class="columns">
+            <div class="column">
+              <div class="tile is-parent">
+                <article class="tile is-child box">
+                  <h1 class="title">Top Trends:</h3>
+                  <table>
+                    {% for trend in homeresult.top_trends %}
+                    <tr class="trend-row">
+                      <td><a target="_blank" href="/?topic={{trend.name|urlencode}}">{{ trend.name }}</a></td>
+                      <td>
+                        <span id="trend{{ forloop.counter0 }}"></span>
+                      </td>
+                      <td style="width: 100px">
+                        <div class="trend-filler" id="trend-fill-{{ forloop.counter0 }}"></div>
+                      </td>
+                      <!-- <br/> -->
+                      <script>
+                        $(document).ready(function() {
+                          analyzeTopTrend('{{ trend.name|urlencode }}', {{ forloop.counter0 }});
+                        });
+                      </script>
+                    </tr>
+                    {% endfor %}
+                  </table>
+                </article>
+              </div>
+            </div>
+            <div class="column">
+              <div class="tile is-parent">
+                <article class="tile is-child box">
+                  <h1 class="title">Top Searches:</h3>
+                  <table>
+                    {% for topic, avg_toxicity in homeresult.top_searches.items %}
+                    <tr class="trend-row">
+                      <td><a target="_blank" href="/?topic={{topic|urlencode}}">{{ topic }}</a></td>
+                      <td>
+                        <span id="search{{ forloop.counter0 }}"></span>
+                      </td>
+                      <td style="width: 100px">
+                        <div class="trend-filler" id="search-fill-{{ forloop.counter0 }}"></div>
+                      </td>
+                      <script>
+                          $(document).ready(function() {
+                            let i = {{ forloop.counter0 }};
+                            let fillId = '#search-fill-' + i;
+                            let toxicPercentageId = '#search' + i; 
+                            showToxicityBar({{ avg_toxicity }}, fillId, toxicPercentageId);
+                          });
+                        </script>
+                    </tr>
+                    {% endfor %}
+                  </table>
+                </article>
+              </div>
+            </div>
           </div>
         </section>
         {% else %}
