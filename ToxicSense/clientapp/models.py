@@ -8,7 +8,7 @@ class Topic(models.Model):
 
 
 class Tweet(models.Model):
-    tweet_id = models.IntegerField(unique=True)
+    tweet_id = models.IntegerField(unique=False)
     screen_name = models.CharField(max_length=16)
     text = models.CharField(max_length=200)
     created_at = models.DateTimeField()
