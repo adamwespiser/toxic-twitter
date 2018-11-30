@@ -265,3 +265,5 @@ def _get_tweets_based_on_request(request):
 def _update_database(search_term, result):
     if settings.ENABLE_CELERY:
         update_database.delay(search_term, result)
+    else:
+        update_database(search_term, result)
