@@ -24,13 +24,13 @@ In this document, we give instructions on how to run the web application locally
 https://developer.twitter.com/content/developer-twitter/en.html
 Create a dev account and get required API Keys and fill them in ToxicSense/data_fetch_helpers/creds.py
 
-$ cd ToxicSense
-Create a python3 virtual environment and activate it. Follow instructions here https://docs.python.org/3/library/venv.html.
+1. $ cd ToxicSense
+2. Create a python3 virtual environment and activate it. Follow instructions here https://docs.python.org/3/library/venv.html.
 Or if you have virtualenvwrapper,
 $ mkvirtualenv --python=`which python3` toxicsense-venv
-$ pip install -r requirements.txt
-$ python manage.py migrate
-$ python manage.py runserver localhost:8000
+3. $ pip install -r requirements.txt
+4. $ python manage.py migrate
+5. $ python manage.py runserver localhost:8000
 
 Visit http://localhost:8000/
 
