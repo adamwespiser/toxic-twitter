@@ -89,7 +89,6 @@ For each category, the prediction is a number between 0 and 1. Where 0 is not a 
     $ mkvirtualenv --python=`which python3` toxicsense-train-model
     $ pip install -r train-requirements.txt
 2. We took the data from https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/data
-    But for quick download, we have uploaded the train file in https://s3.amazonaws.com/toxicsense-submission/train.csv
     Download the file and keep in home folder.
 3. Run jupyter notebook.
     $ jupyter notebook
