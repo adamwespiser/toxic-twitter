@@ -14,12 +14,12 @@ There are two parts:
 2. Machine Learning Model for toxicity classification
 
 
-# Document Overview
+## Document Overview
 In this document, we give instructions on how to run the web application locally, as well as train, build, and make sample predictions with our machine learning toxic comment classifier.
 
-# Section 1: The Web Application
+## Section 1: The Web Application
 
-## Quick Start
+### Quick Start
 
 https://developer.twitter.com/content/developer-twitter/en.html
 Create a dev account and get required API Keys and fill them in ToxicSense/data_fetch_helpers/creds.py
@@ -37,7 +37,7 @@ Visit http://localhost:8000/
 Quick start does not include background processing which stores the retrieved tweets in database for future use.
 To set it up, follow the detailed installation instructions below.
 
-## Full Installation
+### Full Installation
 
 1. $ cd ToxicSense
 2. Create a python3 virtual environment and activate it. Follow instructions here https://docs.python.org/3/library/venv.html.
@@ -60,13 +60,13 @@ To set it up, follow the detailed installation instructions below.
 
 Note: If you are on a Mac and you see some weird errors about Objective C, you may need to run `export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES` from your terminal. It has something to do with the twitter scraper not playing well with python3 on MacOS.
 
-# Section 2: Machine Learning
+## Section 2: Machine Learning
 
-## Toxicity Prediction
+### Toxicity Prediction
 We include instruction for two tasks related to predicting toxicity in tweets, the first, is training the machine learning classifier we use in production and exporting it.
 The second, is using those saved files to run toxicity prediction from the command line.
 
-## Quick Start
+### Quick Start
 
 We have a trained model saved to immediately test the toxic classifier. 
 To run prediction against a tweet,
@@ -82,7 +82,7 @@ The toxicity, along with whether the tweet is obsene, a threat, an insult, or id
 For each category, the prediction is a number between 0 and 1. Where 0 is not a member of the category, and 1 is likely to be a member of the category
 
 
-## Train our Char-NN Deep Learning Model
+### Train our Char-NN Deep Learning Model
 
 1. Install virtualenv and install necessary libraries.
     $ cd create-model
