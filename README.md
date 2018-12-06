@@ -41,7 +41,7 @@ To set it up, follow the detailed installation instructions below.
 
 1. $ cd ToxicSense
 2. Create a python3 virtual environment and activate it. Follow instructions here https://docs.python.org/3/library/venv.html.
-    - Or if you have virtualenvwrapper,
+    - Or if you have virtualenvwrapper,<br/>
     $ mkvirtualenv --python=`which python3` toxicsense-venv-1
 3. Install the requirements by running 
     $ pip install -r requirements.txt
