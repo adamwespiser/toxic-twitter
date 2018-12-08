@@ -54,6 +54,9 @@
           padding-right: 8px !important;
           vertical-align: middle !important;
         }
+        .footer {
+          padding: 2rem !important;
+        }
       </style>
       <script>
         function analyzeTopTrend(topic, i) {
@@ -360,6 +363,17 @@
           Analyze tweets and stay safe online!
         </section>
         {% endif %}
+        <footer class="footer">
+          <div class="content has-text-centered">
+            <p>
+              <strong>Built by</strong>
+              <a href="https://github.com/adamwespiser">Adam Wespiser</a>,
+              <a href="https://github.com/ajaybhargavb">Ajay Bhargav</a>,
+              <a href="https://github.com/mukundvis">Mukund Muralikrishnan</a>,
+              <a href="https://github.com/nachiappan1312">Nachiappan</a>
+            </p>
+          </div>
+        </footer>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
         <script type="text/javascript" src="{% static 'clientapp/js/common_visualizations.js' %}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
