@@ -27,7 +27,7 @@ Create a dev account and get required API Keys and fill them in ToxicSense/data_
 1. $ cd ToxicSense
 2. Create a python3 virtual environment and activate it. Follow instructions here https://docs.python.org/3/library/venv.html.\
 Or if you have virtualenvwrapper,\
-$ mkvirtualenv --python=`which python3` toxicsense-venv
+$ mkvirtualenv --python=`` `which python3` `` toxicsense-venv
 3. $ pip install -r requirements.txt
 4. $ python manage.py migrate
 5. $ python manage.py runserver localhost:8000
@@ -42,7 +42,7 @@ To set it up, follow the detailed installation instructions below.
 1. $ cd ToxicSense
 2. Create a python3 virtual environment and activate it. Follow instructions here https://docs.python.org/3/library/venv.html.
     - Or if you have virtualenvwrapper,<br/>
-    $ mkvirtualenv --python=`which python3` toxicsense-venv-1
+    $ mkvirtualenv --python=`` `which python3` `` toxicsense-venv-1
 3. Install the requirements by running\
     $ pip install -r requirements.txt
 4. Run the migrations\
@@ -72,7 +72,7 @@ We have a trained model saved to immediately test the toxic classifier.
 To run prediction against a tweet,
 
 $ cd create-model\
-$ mkvirtualenv --python=`which python3` toxicsense-test-model\
+$ mkvirtualenv --python=`` `which python3` `` toxicsense-test-model\
 $ pip install -r test-requirements.txt\
 $ python make_prediction.py <tweet>\
 for instance you could run,\
@@ -86,7 +86,7 @@ For each category, the prediction is a number between 0 and 1. Where 0 is not a 
 
 1. Install virtualenv and install necessary libraries.\
     $ cd create-model\
-    $ mkvirtualenv --python=`which python3` toxicsense-train-model\
+    $ mkvirtualenv --python=`` `which python3` `` toxicsense-train-model\
     $ pip install -r train-requirements.txt
 2. We took the data from https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/data\
     Download the file and keep in home folder.
