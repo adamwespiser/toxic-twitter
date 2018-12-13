@@ -9,7 +9,7 @@ The second, is using those saved files to run toxicity prediction from the comma
 We have a trained model saved to immediately test the toxic classifier. 
 To run prediction against a tweet,
 
-$ cd create-model\
+$ cd build-model\
 $ mkvirtualenv --python=`` `which python3` `` toxicsense-test-model\
 $ pip install -r test-requirements.txt\
 $ python make_prediction.py <tweet>\
@@ -23,7 +23,7 @@ For each category, the prediction is a number between 0 and 1. Where 0 is not a 
 ### Train our Char-NN Deep Learning Model
 
 1. Install virtualenv and install necessary libraries.\
-    $ cd create-model\
+    $ cd build-model\
     $ mkvirtualenv --python=`` `which python3` `` toxicsense-train-model\
     $ pip install -r train-requirements.txt
 2. We took the data from https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/data\
