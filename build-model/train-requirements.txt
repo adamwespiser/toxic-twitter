@@ -29,7 +29,7 @@ rope==0.11.0
 scipy==1.1.0
 six==1.11.0
 tensorboard==1.11.0
-tensorflow==1.15.0
+tensorflow==1.15.2
 termcolor==1.1.0
 typed-ast==1.1.0
 Unidecode==1.0.22
